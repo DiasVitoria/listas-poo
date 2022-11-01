@@ -1,0 +1,9 @@
+.vscode/
+/atvi-wb-typescript/node_modules/
+/atvi-wb-typescript/node_modules/**
+/atvi-wb-typescript/out/
+/atvi-wb-typescript/out/**
+/node_modules/
+/node_modules/**
+/out/
+/out/**
