@@ -16,30 +16,30 @@ export default class CadastroCliente extends Cadastro {
     }
     public cadastrar(): void {
         let verificador = new VerificacaoNumero()
-        console.log(`Início do cadastro do cliente`);
+        console.log(`Início do cadastro do cliente:`);
 
-        let nome = this.entrada.receberTexto(`Por favor, informe o nome do cliente: `)
+        let nome = this.entrada.receberTexto(`Nome: `)
         while (nome.length == 0 || nome == " ") {
-            nome = this.entrada.receberTexto(`Por favor, informe o nome do cliente: `)
+            nome = this.entrada.receberTexto(`Inválido. Nome: `)
         }
 
-        let nomeSocial = this.entrada.receberTexto(`Por favor, informe o nome social do cliente: `)
+        let nomeSocial = this.entrada.receberTexto(`Nome social: `)
         while (nomeSocial.length == 0 || nomeSocial == " ") {
-            nomeSocial = this.entrada.receberTexto(`Por favor, informe o nome social do cliente: `)
+            nomeSocial = this.entrada.receberTexto(`Inválido. Nome social: `)
         }
 
-        let sexo = this.entrada.receberTexto(`Por favor, informe o sexo (M,F,O): `).toUpperCase()
+        let sexo = this.entrada.receberTexto(`Sexo (M,F,O): `).toUpperCase()
         while (sexo != "M" && sexo != "F" && sexo != "O") {
-            sexo = this.entrada.receberTexto(`Formato inválido, reentre (M,F,O): `).toUpperCase();
+            sexo = this.entrada.receberTexto(`Inválido. Sexo (M,F,O): `).toUpperCase();
         }
 
-        let rgValor = this.entrada.receberTexto(`Por favor, informe o número do RG: `)
+        let rgValor = this.entrada.receberTexto(`RG (Somente números): `)
         while (rgValor.length != 9 || verificador.verificar(rgValor) || this.clientes.find(item => item.getRg.getValor == rgValor) != undefined || rgValor == " ") {
-            let mensagem = rgValor.length == 0? 'Por favor, informe o número do RG: ': 'RG inválido, reentre: '
+            let mensagem = rgValor.length == 0? 'RG (Somente números): ': 'Inválido. RG (Somente números): '
             rgValor = this.entrada.receberTexto(`${mensagem}`)
         }
 
-        let rgData = this.entrada.receberTexto(`Por favor, informe a data de emissão do RG, no padrão dd/mm/yyyy: `);
+        let rgData = this.entrada.receberTexto(`Data de emissão do RG (dd/mm/yyyy): `);
 
         while (!rgData.includes("/") ||
             rgData.split("/").length != 3 ||
@@ -52,17 +52,17 @@ export default class CadastroCliente extends Cadastro {
             (new Number(rgData.split("/")[1]).valueOf() > 12 || new Number(rgData.split("/")[1]).valueOf() <= 0) ||
             verificador.verificar(rgData.split("/")[2]) ||
             (new Number(rgData.split("/")[2]).valueOf() > 2022 || new Number(rgData.split("/")[2]).valueOf() <= 0)) {
-            rgData = this.entrada.receberTexto(`Data inválida, reentre: (dd/mm/yyyy): `);
+            rgData = this.entrada.receberTexto(`Inválido. Data de emissão do RG (dd/mm/yyyy): `);
         }
 
-        let cpfValor = this.entrada.receberTexto(`Por favor, informe o número do CPF: `);
+        let cpfValor = this.entrada.receberTexto(`CPF (Somente números): `);
 
         while (cpfValor.length != 11 || verificador.verificar(cpfValor) || this.clientes.find(item => item.getCpf.getValor == cpfValor) != undefined || cpfValor == " ") {
-            let mensagem = cpfValor.length == 0? 'Por favor, informe o número do CPF: ' : 'CPF inválido, reentre: '
+            let mensagem = cpfValor.length == 0? 'CPF (Somente números): ' : 'Inválido. CPF (Somente números): '
             cpfValor = this.entrada.receberTexto(`${mensagem}`)
         }
 
-        let cpfData = this.entrada.receberTexto(`Por favor, informe a data de emissão do CPF, no padrão dd/mm/yyyy: `);
+        let cpfData = this.entrada.receberTexto(`Data de emissão do CPF (dd/mm/yyyy): `);
 
         while (!cpfData.includes("/") ||
             cpfData.split("/").length != 3 ||
@@ -76,18 +76,18 @@ export default class CadastroCliente extends Cadastro {
             verificador.verificar(cpfData.split("/")[2]) ||
             (new Number(cpfData.split("/")[2]).valueOf() > 2022 || new Number(cpfData.split("/")[2]).valueOf() <= 0)) 
         {
-            cpfData = this.entrada.receberTexto(`Data inválida, reentre: (dd/mm/yyyy): `);
+            cpfData = this.entrada.receberTexto(`Inválido. Data de emissão do CPF (dd/mm/yyyy): `);
         }
 
-        let telefoneDDD = this.entrada.receberTexto(`Por favor, insira o DDD: `)
+        let telefoneDDD = this.entrada.receberTexto(`DDD (Somente números): `)
         while (telefoneDDD.length != 2 || verificador.verificar(telefoneDDD) || telefoneDDD == " ") {
-            let mensagem = telefoneDDD.length == 0? 'Por favor, insira o DDD: ' : 'DDD inválido, reentre: '
+            let mensagem = telefoneDDD.length == 0? 'DDD (Somente números): ' : 'Inválido. DDD (Somente números): '
             telefoneDDD = this.entrada.receberTexto(`${mensagem}`)
         }
 
-        let telefoneNumero = this.entrada.receberTexto(`Por favor, insira o telefone: `)
+        let telefoneNumero = this.entrada.receberTexto(`Número telefone: `)
         while (telefoneNumero.length != 9 || verificador.verificar(telefoneNumero) || telefoneNumero == " ") {
-            let mensagem = telefoneNumero.length == 0? 'Por favor, insira o telefone: ' : 'Telefone inválido, reentre: '
+            let mensagem = telefoneNumero.length == 0? 'Número telefone: ' : 'Inválido. Número telefone: '
             telefoneNumero = this.entrada.receberTexto(`${mensagem}`)
         }
 

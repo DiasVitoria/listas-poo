@@ -1,6 +1,7 @@
 import Entrada from "../../io/entrada";
 import Servico from "../../modelo/servico";
 import Cadastro from "../../modelo/cadastro";
+import VerificacaoNumero from "../verificacoes/verificacaoNumero";
 
 export default class CadastroServico extends Cadastro {
     private servicos: Array<Servico>;
@@ -11,19 +12,21 @@ export default class CadastroServico extends Cadastro {
         this.servicos = servicos;
     }
     public cadastrar(): void {
-        console.log(`Início do cadastro do serviço\n`);
-        let nome = this.entrada.receberTexto(`Por favor informe o nome do serviço: `);
+        let verificacao = new VerificacaoNumero()
+        console.log(`\nInício do cadastro do serviço:`);
+        let nome = this.entrada.receberTexto(`Nome: `);
         while (this.servicos.find(item => item.nome == nome || nome.length == 0)){
             let mensagem = nome.length == 0? '': 'Produto já cadastrado. '
-            nome = this.entrada.receberTexto(`${mensagem}Por favor, informe o nome do produto: `)
+            nome = this.entrada.receberTexto(`${mensagem} Nome: `)
 
         }
-        let preco = this.entrada.receberTexto(`Por favor, informe o preço do serviço: `);
-        while (preco.length == 0 || parseInt(preco) <= 0){
-            preco = this.entrada.receberTexto(`Por favor, informe o preço do serviço: `)
+        let preco = this.entrada.receberTexto(`Preço, R$: `);
+        while (preco.length == 0 || preco == " " || verificacao.verificar(preco) || new Number(preco).valueOf() <= 0){
+            let mensagem = preco.length == 0 || preco == " "? 'Preço, R$: ': 'Inválido. Preço, R$: '
+            preco = this.entrada.receberTexto(`${mensagem}`)
         }
-        let servico = new Servico(nome, parseInt(preco));
+        let servico = new Servico(nome, new Number(preco).valueOf());
         this.servicos.push(servico);
-        console.log(`\nCadastro concluído :)\n`);
+        console.log(`\nCadastro concluído :)`);
     }
 }

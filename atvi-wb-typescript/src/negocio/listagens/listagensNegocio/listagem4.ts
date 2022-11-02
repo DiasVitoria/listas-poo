@@ -34,7 +34,7 @@ export default class Listagem4{
             if(item.sexo == "F"){
                 item.getHistoricoConsumo.forEach(c=>{
                     let h = new HistoricoConsumo(c.tipo, c.nome, c.quantidade, c.valorPago)
-                    consumosMasculinosBruto.push(h)
+                    consumosFemininosBruto.push(h)
                 })
             }
         })
@@ -42,7 +42,7 @@ export default class Listagem4{
             if(item.sexo == "O"){
                 item.getHistoricoConsumo.forEach(c=>{
                     let h = new HistoricoConsumo(c.tipo, c.nome, c.quantidade, c.valorPago)
-                    consumosMasculinosBruto.push(h)
+                    consumosOutrosBruto.push(h)
                 })
             }
         })
@@ -73,10 +73,10 @@ export default class Listagem4{
                 consumido.quantidade += item.quantidade
             }
         })
-        
+        console.log(`----------------------------------------------`);
         console.log(`Produtos e serviços mais consumidos pelo gênero Masculino: `)
         let posicao = 1
-
+        console.log(`---------------------------`);
         consumosMasculinosFinal.sort(function compare(a, b): number {
             let quantidadeA = a.quantidade
             let quantidadeB = b.quantidade
@@ -91,6 +91,7 @@ export default class Listagem4{
         console.log(`\nProdutos e serviços mais consumidos pelo gênero Feminino: `)
         posicao = 1
 
+        console.log(`---------------------------`);
         consumosFemininosFinal.sort(function compare(a, b): number {
             let quantidadeA = a.quantidade
             let quantidadeB = b.quantidade
@@ -104,7 +105,7 @@ export default class Listagem4{
 
         console.log(`\nProdutos e serviços mais consumidos pelo gênero Outros: `)
         posicao = 1
-
+        console.log(`---------------------------`);
         consumosOutrosFinal.sort(function compare(a, b): number {
             let quantidadeA = a.quantidade
             let quantidadeB = b.quantidade

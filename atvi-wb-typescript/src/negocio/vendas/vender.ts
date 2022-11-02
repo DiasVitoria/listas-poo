@@ -22,59 +22,62 @@ export default class Vender{
 
     runOpcoes(){
         while(this.execucao){
-            console.log(`\nOpções de vendas`);
+            console.log(`----------------------------------------------`);
+            console.log(`Opções de vendas`);
             console.log(`\n1 - Vender produto`);
             console.log(`2 - Vender serviço`);
             console.log(`\n0 - Voltar`);
+            console.log(`----------------------------------------------`);
             let opcao = this.entrada.receberNumero(`Por favor, escolha uma opção: `);
+            console.log(`----------------------------------------------`);
             let receberNomeCliente;
             switch(opcao){
                 case 1:
-                    receberNomeCliente = this.entrada.receberTexto(`Por favor informe o nome do cliente: `);
+                    receberNomeCliente = this.entrada.receberTexto(`Nome do cliente: `);
                     let clienteProduto = this.getCliente(receberNomeCliente);
                     if(clienteProduto == undefined){
-                        console.log(`Cliente não encontrado!`);
+                        console.log(`\nCliente não encontrado!`);
                         break;
                     }
-                    let receberNomeProduto = this.entrada.receberTexto(`Por favor informe o nome do produto: `);
+                    let receberNomeProduto = this.entrada.receberTexto(`Nome do produto: `);
                     let produto = this.getProduto(receberNomeProduto);
                     if(produto == undefined){
-                        console.log(`Produto não encontrado!`)
+                        console.log(`\nProduto não encontrado!`)
                         break;
                     }
 
-                    let quantidadeProdutos = this.entrada.receberTexto(`Por favor informe a quantidade de produtos a ser vendida: `)
+                    let quantidadeProdutos = this.entrada.receberTexto(`Quantidade: `)
 
                     while(this.verificador.verificar(quantidadeProdutos) || quantidadeProdutos == " " || new Number(quantidadeProdutos).valueOf() <= 0){
-                        quantidadeProdutos = this.entrada.receberTexto(`Por favor informe a quantidade de produtos a ser vendida: `)
+                        quantidadeProdutos = this.entrada.receberTexto(`Quantidade: `)
                     }
                     let quantidadeProdutosN = new Number(quantidadeProdutos).valueOf()
 
                     let newProdutoConsumido = new HistoricoConsumo("produto", produto.nome, quantidadeProdutosN, (quantidadeProdutosN * produto.preco));
                     clienteProduto.getHistoricoConsumo.push(newProdutoConsumido)
-                    console.log(`Venda realizada com sucesso!`)
+                    console.log(`\nVenda realizada com sucesso!`)
                     produto.setQuantidadeVendida = produto.getQuantidadeVendida + quantidadeProdutosN
                     clienteProduto.quantidadeProdutos += quantidadeProdutosN
                     this.execucao = false
                     break;
                 case 2:
-                    receberNomeCliente = this.entrada.receberTexto(`Por favor informe o nome do cliente: `);
+                    receberNomeCliente = this.entrada.receberTexto(`Nome do cliente: `);
                     let clienteServico = this.getCliente(receberNomeCliente);
                     if(clienteServico == undefined){
-                        console.log(`Cliente não encontrado!`);
+                        console.log(`\nCliente não encontrado!`);
                         break;
                     }
-                    let receberNomeServico = this.entrada.receberTexto(`Por favor informe o nome do serviço: `);
+                    let receberNomeServico = this.entrada.receberTexto(`Nome do serviço: `);
                     let servico = this.getServico(receberNomeServico);
                     if(servico == undefined){
-                        console.log(`Serviço não encontrado!`)
+                        console.log(`\nServiço não encontrado!`)
                         break;
                     }
 
-                    let quantidadeServicos = this.entrada.receberTexto(`Por favor informe a quantidade de serviços a ser vendida: `)
+                    let quantidadeServicos = this.entrada.receberTexto(`Quantidade: `)
 
                     while(this.verificador.verificar(quantidadeServicos) || quantidadeServicos == " " || new Number(quantidadeServicos).valueOf() <= 0){
-                        quantidadeServicos = this.entrada.receberTexto(`Por favor informe a quantidade de serviços a ser vendida: `)
+                        quantidadeServicos = this.entrada.receberTexto(`Quantidade: `)
                     }
                     let quantidadeServicosN = new Number(quantidadeServicos).valueOf();
 
@@ -82,8 +85,9 @@ export default class Vender{
                     clienteServico.getHistoricoConsumo.push(newServicoConsumido)
                     servico.setQuantidadeVendida = servico.getQuantidadeVendida + quantidadeServicosN
                     clienteServico.quantidadeServicos += quantidadeServicosN
-                    console.log(`Venda realizada com sucesso!`)
+                    console.log(`\nVenda realizada com sucesso!`)
                     this.execucao = false
+                    break;
                 case 0:
                     this.execucao = false;
                     console.log(`\nVoltando ao menu principal`)

@@ -35,9 +35,9 @@ export default class UpdateCliente extends Update {
             console.log(`----------------------------------------------`);
             switch (opcao) {
                 case 1:
-                    let newName = this.entrada.receberTexto(`Por favor, informe o novo nome do cliente: `);
+                    let newName = this.entrada.receberTexto(`Novo nome: `);
                     while (newName.length == 0 || this.cliente.nome == newName || newName == " ") {
-                        let mensagem = newName.length == 0 || newName == " "? 'Por favor, informe o nome do cliente: ' : 'O nome não pode ser igual ao anterior: '
+                        let mensagem = newName.length == 0 || newName == " "? 'Novo nome: ' : 'Não pode ser igual ao anterior, novo nome: '
                         newName = this.entrada.receberTexto(`${mensagem}`)
                     }
                     this.cliente.nome = newName;
@@ -46,9 +46,9 @@ export default class UpdateCliente extends Update {
                     break;
 
                 case 2:
-                    let newSocialName = this.entrada.receberTexto(`Por favor informe o novo nome social do cliente: `);
+                    let newSocialName = this.entrada.receberTexto(`Novo nome social: `);
                     while (newSocialName.length == 0 || this.cliente.nomeSocial == newSocialName || newSocialName == " ") {
-                        let mensagem = newSocialName.length == 0 || newSocialName == " "? 'Por favor, informe o novo nome social do cliente: ': 'O nome social não pode ser igual ao anterior: '
+                        let mensagem = newSocialName.length == 0 || newSocialName == " "? 'Novo nome social: ': 'Não pode ser igual ao anterior, novo nome social: '
                         newSocialName = this.entrada.receberTexto(`${mensagem}`)
                     }
                     this.cliente.nomeSocial = newSocialName;
@@ -57,16 +57,10 @@ export default class UpdateCliente extends Update {
                     break;
 
                 case 3:
-                    let newSexo = this.entrada.receberTexto(`Por favor informe o novo sexo do cliente: `).toUpperCase();
-                    while (this.cliente.sexo == newSexo) {
-                        newSexo = this.entrada.receberTexto(`O sexo não pode ser igual ao anterior: `).toUpperCase()
-                    }
-                    while (newSexo != "M" && newSexo != "F" && newSexo != "O") {
-                        if (this.cliente.sexo == newSexo) {
-                            newSexo = this.entrada.receberTexto(`O sexo não pode ser igual ao anterior: `).toUpperCase()
-                        } else {
-                            newSexo = this.entrada.receberTexto(`Formato inválido, reentre (M,F,O): `).toUpperCase();
-                        }
+                    let newSexo = this.entrada.receberTexto(`Novo sexo: `).toUpperCase();
+                    while (this.cliente.sexo == newSexo || (newSexo != "M" && newSexo != "F" && newSexo != "O")) {
+                        let mensagem = this.cliente.sexo == newSexo? 'Não pode ser igual ao anterior, novo sexo: ' : 'Inválido, novo sexo: '
+                        newSexo = this.entrada.receberTexto(`${mensagem}`).toUpperCase()
                     }
                     this.cliente.sexo = newSexo;
                     this.wasUpdated = true;
@@ -74,15 +68,15 @@ export default class UpdateCliente extends Update {
                     break;
 
                 case 4:
-                    let newPhoneDdd = this.entrada.receberTexto(`Por favor, informe o novo DDD do telefone: `);
+                    let newPhoneDdd = this.entrada.receberTexto(`Novo DDD: `);
                     while (newPhoneDdd.length != 2 || verificador.verificar(newPhoneDdd) || newPhoneDdd == " ") {
-                        let mensagem = newPhoneDdd.length == 0 || newPhoneDdd == " "? 'Por favor, insira o DDD: ' : 'DDD inválido, reentre: '
+                        let mensagem = newPhoneDdd.length == 0 || newPhoneDdd == " "? 'Novo DDD: ' : 'Inválido, novo DDD: '
                         newPhoneDdd = this.entrada.receberTexto(`${mensagem}`)
                     }
 
-                    let newPhoneNumber = this.entrada.receberTexto(`Por favor, informe o novo número de telefone: `);
+                    let newPhoneNumber = this.entrada.receberTexto(`Novo número de telefone: `);
                     while (newPhoneNumber.length == 0 || verificador.verificar(newPhoneNumber) || this.cliente.telefone.getNumero == newPhoneNumber || newPhoneNumber == " ") {
-                        let mensagem = newPhoneNumber.length == 0 || newPhoneNumber == " "? 'Por favor, insira o novo número de telefone: ' : verificador.verificar(newPhoneNumber)? 'Telefone inválido, reentre: ' : 'O telefone não pode ser igual ao anterior: ' 
+                        let mensagem = newPhoneNumber.length == 0 || newPhoneNumber == " "? 'Novo número de telefone: ' : verificador.verificar(newPhoneNumber)? 'Inválido, novo número de telefone: ' : 'Não pode ser igual ao anterior, novo número de telefone: ' 
                         newPhoneNumber = this.entrada.receberTexto(`${mensagem}`)
                     }
                     let newPhone = new Telefone(newPhoneDdd, newPhoneNumber);

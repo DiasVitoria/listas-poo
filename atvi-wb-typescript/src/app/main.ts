@@ -18,9 +18,9 @@ let execucao = true
 
 
 let cliente = new Cliente('vitoria','vizz',new CPF('123',new Date()),new RG('123',new Date()),'F',new Telefone('12','12345678'))
-let cliente2 = new Cliente('thales','tk',new CPF('1234',new Date()),new RG('1234',new Date()),'F',new Telefone('12','9991447670'))
-let cliente3 = new Cliente('teste','tst',new CPF('1235',new Date()),new RG('1235',new Date()),'F',new Telefone('12','36163183'))
-let cliente4 = new Cliente('valorant','vava',new CPF('1236',new Date()),new RG('1236',new Date()),'F',new Telefone('12','23727411'))
+let cliente2 = new Cliente('thales','tk',new CPF('1234',new Date()),new RG('1234',new Date()),'M',new Telefone('12','9991447670'))
+let cliente3 = new Cliente('teste','tst',new CPF('1235',new Date()),new RG('1235',new Date()),'O',new Telefone('12','36163183'))
+let cliente4 = new Cliente('valorant','vava',new CPF('1236',new Date()),new RG('1236',new Date()),'M',new Telefone('12','23727411'))
 empresa.getClientes.push(cliente, cliente2, cliente3, cliente4)
 let produto = new Produto('agua',2)
 let produto2 = new Produto('cafe',3)

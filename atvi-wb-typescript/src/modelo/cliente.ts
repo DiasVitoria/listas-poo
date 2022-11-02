@@ -53,7 +53,7 @@ export default class Cliente {
 
     public visualizar(): void {
         console.log(`----------------------------------------------`);
-        console.log(`Informações do cliente ${this.nome}:`);
+        console.log(`\nInformações do cliente ${this.nome}:`);
         console.log(`----------------------------------`);
         console.log(`Nome social: ${this.nomeSocial}`);
         console.log(`Sexo: ${this.sexo}`);
@@ -72,9 +72,10 @@ export default class Cliente {
             })
 
             if(printar.length > 0){
+                console.log(`----------------------------------`);
                 console.log(`Produtos consumidos: `)
                 printar.forEach(item => console.log(item))
-                console.log(`Total gasto em produtos: ${totalGasto}`)
+                console.log(`\nTotal gasto em produtos: ${totalGasto}`)
             }else{
                 console.log(`Nenhum produto consumido.`);
             }
@@ -90,10 +91,12 @@ export default class Cliente {
             })
 
             if(printar.length > 0){
+                console.log(`----------------------------------`);
                 console.log(`Serviços consumidos: `)
                 printar.forEach(item => console.log(item))
-                console.log(`Total gasto em produtos: ${totalGasto}`)
+                console.log(`\nTotal gasto em produtos: ${totalGasto}`)
             }else{
+                console.log(`----------------------------------`);
                 console.log(`Nenhum serviço consumido.`);
                 
             }

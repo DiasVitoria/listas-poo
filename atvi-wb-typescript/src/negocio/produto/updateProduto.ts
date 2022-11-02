@@ -32,10 +32,10 @@ export default class UpdateProduto extends Update {
             console.log(`----------------------------------------------`);
             switch (opcao) {
                 case 1:
-                    let newName = this.entrada.receberTexto(`Por favor informe o novo nome do produto: `);
+                    let newName = this.entrada.receberTexto(`Novo nome: `);
                     while (this.empresa.getProdutos.find(item => item.nome == newName || newName.length == 0 || this.produto.nome == newName || newName == " ")) {
-                        let mensagem = newName.length == 0 || newName == " "? 'Por favor, informe o nome do produto: ' : 'Produto já cadastrado. Por favor, informe o nome do produto: '
-                        mensagem = this.produto.nome == newName ? `O nome não pode ser igual ao anterior: ` : mensagem
+                        let mensagem = newName.length == 0 || newName == " "? 'Novo nome: ' : 'Produto já cadastrado. Novo nome: '
+                        mensagem = this.produto.nome == newName ? `Não pode ser igual ao anterior. Novo nome: ` : mensagem
                         newName = this.entrada.receberTexto(`${mensagem}`)
                     }
                     this.produto.nome = newName;
@@ -43,13 +43,13 @@ export default class UpdateProduto extends Update {
                     this.wasUpdated = true;
                     break;
                 case 2:
-                    let newValor = this.entrada.receberTexto(`Por favor, informe o novo valor do produto: `)
-                    while (this.produto.preco == parseInt(newValor) || parseInt(newValor) <= 0 || newValor.length == 0 || verificacao.verificar(newValor)) {
-                        let mensagem = parseInt(newValor) <= 0 ||  newValor.length == 0 ? verificacao.verificar(newValor)? 'Preço inválido, reentre: ' :'Por favor, informe o novo valor do produto: ' : 'O valor não pode ser o mesmo: '
+                    let newValor = this.entrada.receberTexto(`Preço, R$: `)
+                    while (this.produto.preco == new Number(newValor).valueOf() || new Number(newValor).valueOf() <= 0 || newValor.length == 0 || verificacao.verificar(newValor)) {
+                        let mensagem = newValor.length == 0 ? 'Preço, R$: ' : new Number(newValor).valueOf() <= 0 || verificacao.verificar(newValor)? 'Inválido. Preço, R$: ' : 'Não pode ser o mesmo do anterior. Preço, R$: '
                         newValor = this.entrada.receberTexto(`${mensagem}`)
                     }
-                    this.produto.preco = parseInt(newValor)
-                    console.log(`Valor alterado com sucesso!`);
+                    this.produto.preco = new Number(newValor).valueOf()
+                    console.log(`\nValor alterado com sucesso!`);
                     this.wasUpdated = true
                     break
                 case 0:

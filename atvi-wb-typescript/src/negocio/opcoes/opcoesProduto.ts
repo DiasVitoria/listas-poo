@@ -64,7 +64,7 @@ export default class OpcoesProduto {
                     if (protudoDelete != undefined) {
                         let indexProduto = this.empresa.getProdutos.indexOf(protudoDelete);
                         this.empresa.getProdutos.splice(indexProduto, 1);
-                        console.log(`\nProduto excluído com sucesso!\n`);
+                        console.log(`\nProduto excluído com sucesso!`);
                     } else {
                         console.log(`Produto não encontrado!`);
                     }
