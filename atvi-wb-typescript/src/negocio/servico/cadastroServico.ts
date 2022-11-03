@@ -15,9 +15,9 @@ export default class CadastroServico extends Cadastro {
         let verificacao = new VerificacaoNumero()
         console.log(`\nInício do cadastro do serviço:`);
         let nome = this.entrada.receberTexto(`Nome: `);
-        while (this.servicos.find(item => item.nome == nome || nome.length == 0)){
-            let mensagem = nome.length == 0? '': 'Produto já cadastrado. '
-            nome = this.entrada.receberTexto(`${mensagem} Nome: `)
+        while (this.servicos.find(item => item.nome == nome || nome.length == 0 || nome == " ")){
+            let mensagem = nome.length == 0 || nome == " "? 'Nome: ' : 'Produto já cadastrado. Nome: '
+            nome = this.entrada.receberTexto(`${mensagem}`)
 
         }
         let preco = this.entrada.receberTexto(`Preço, R$: `);
