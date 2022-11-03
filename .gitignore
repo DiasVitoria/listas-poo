@@ -3,6 +3,8 @@
 /atvi-wb-typescript/node_modules/**
 /atvi-wb-typescript/out/
 /atvi-wb-typescript/out/**
+/atvii-wb-typescript/node_modules/
+/atvii-wb-typescript/node_modules/**
 /node_modules/
 /node_modules/**
 /out/
