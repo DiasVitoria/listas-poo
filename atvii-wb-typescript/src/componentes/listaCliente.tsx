@@ -49,11 +49,11 @@ export default class ListaCliente extends Component<props> {
                         </div>
                     </li>
                     <li >
-                        <div className="row no-padding collapsible-header">
-                            <i className="col s12 l1 blue large material-icons">account_circle</i>
-                            <p className="col s12 l7 blue">Cliente 3</p>
-                            <i className="col s12 l2 blue large material-icons">create</i>
-                            <i className="col s12 l2 blue large material-icons">delete</i></div>
+                        <div className="collapsible-header">
+                            <i className="blue large material-icons">account_circle</i>
+                            <p className="blue">Cliente 3</p>
+                            <i className="blue large material-icons">create</i>
+                            <i className="blue large material-icons">delete</i></div>
                         <div className="collapsible-body">
                             <span>Nome Social:</span><br />
                             <span>Sexo:</span><br />
