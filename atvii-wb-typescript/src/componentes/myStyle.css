@@ -1,5 +1,5 @@
 a {
-    color: #009688;
+    color: #ff80ab ;
 }
 
 a:hover{
@@ -7,18 +7,21 @@ a:hover{
 }
 
 #backgroundClientContainer{
-    height: 100vh;
+    height: 100%;
+    padding: 10px 0 25px 0;
+    background-color: #f0f0f0;
 }
 
 #titleContainer{
-    width: 25%;
-    background-color: #009688;
+    width: 27%;
+    background-color: #ff80ab ;
     border-radius: 0 20px 20px 0;
 }
 
 #clientTitle{
     color: #FFF;
-    margin: 20px 0 30px 20px;
+
+    margin: 10px 0 30px 20px;
     padding: 10px 0 10px 0;
 }
 
@@ -28,7 +31,12 @@ a:hover{
 }
 
 #collapsibleHeader:hover{
-    background-color: #4db6ac;
+    background-color: #ff80ab ;
+    color: #FFF;
+}
+
+#collapsibleHeader{
+    text-align: center;
 }
 
 #collapsibleBody{
@@ -51,7 +59,7 @@ a:hover{
     justify-content: center;
     align-items: center;
     position: fixed;
-    bottom: 10px;
+    bottom: 30px;
     right: 10px;
     width: 50px;
     height: 50px;

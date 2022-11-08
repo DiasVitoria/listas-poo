@@ -25,19 +25,19 @@ export default class Roteador extends Component<{}, state> {
     }
 
     render() {
-        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#009688 teal" botoes={['Clientes', 'Cadastro Cliente', 'Produtos', 'Cadastro Produto', 'Serviços', 'Cadastro Serviços']} />
+        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Clientes', 'Cadastro Cliente', 'Produtos', 'Serviços']} />
         if (this.state.tela === 'Clientes') {
             return (
                 <>
                     {barraNavegacao}
-                    <ListaCliente tema="#009688 teal" />
+                    <ListaCliente tema="#ff4081 pink accent-2" />
                 </>
             )
         } else if (this.state.tela === "Cadastro Cliente") {
             return (
                 <>
                     {barraNavegacao}
-                    <FormularioCadastroCliente tema="#009688 teal" />
+                    <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
                 </>
             )
         }
