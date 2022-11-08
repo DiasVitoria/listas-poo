@@ -37,18 +37,20 @@ export default class BarraNavegacao extends Component<props> {
         let estilo = `${this.props.tema}`
         return (
             <>
-                <nav className={estilo}>
-                    <div className="nav-wrapper">
-                        <a className="brand-logo">World Beauty</a>
-                        <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                        <ul className="right hide-on-med-and-down">
-                            {this.gerarListaBotoes()}
-                        </ul>
-                    </div>
-                </nav>
-                <ul className="sidenav" id="mobile-menu">
-                    {this.gerarListaBotoes()}
-                </ul>
+                <div className="navbar-fixed">
+                    <nav className={estilo}>
+                        <div className="nav-wrapper">
+                            <a className="brand-logo">World Beauty</a>
+                            <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                            <ul className="right hide-on-med-and-down">
+                                {this.gerarListaBotoes()}
+                            </ul>
+                        </div>
+                    </nav>
+                    <ul className="sidenav" id="mobile-menu">
+                        {this.gerarListaBotoes()}
+                    </ul>
+                </div>
             </>
         )
     }

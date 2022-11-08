@@ -1,0 +1,91 @@
+a {
+    color: #ff4081;
+}
+
+a:hover{
+    color: #ff80ab;
+}
+
+#backgroundClientContainer{
+    background-color: #fce4ec;
+    height: 100vh;
+    padding: 5px 0;
+}
+
+#titleContainer{
+    width: 30%;
+    background-color: #ff4081;
+    border-radius: 0 20px 20px 0;
+}
+
+#clientTitle{
+    width: 90%;
+    color: #FFF;
+    margin: 20px 0 30px 20px;
+    padding: 10px 0 10px 0;
+}
+
+#collapsibleContainer{
+    width: 80%;
+    margin: 0 auto;
+}
+
+#collapsibleHeader:hover{
+    background-color: #ff80ab;
+    color: #FFF;
+}
+
+#collapsibleBody{
+    background-color: #fff;
+}
+
+#editDeleteButtonContainer{
+    display: flex;
+    justify-content: flex-end;
+    margin: 3px;
+}
+
+#editDeleteButton{
+    margin: 0 5px 0 12px;
+}
+
+#addButtonContainer{
+    margin: 0 20px 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+
+/* -----------------------MODAL----------------------- */
+
+#modalLine{
+    margin-bottom: 0;
+}
+
+#cancelButtonContainer{
+    color: #FFF;
+    margin: 0 7px 0 0; 
+    background-color: #c0c0c0;
+}
+
+#cadastrarButtonContainer{
+    color: #FFF;
+    margin: 0 7px 0 0; 
+    background-color: #ff80ab;
+}
+
+
+#cancelButton{
+    color: #fff;
+}
+
+#sendButton{
+    color: #fff;
+}
+

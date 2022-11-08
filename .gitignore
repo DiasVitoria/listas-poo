@@ -5,6 +5,8 @@
 /atvi-wb-typescript/out/**
 /atvii-wb-typescript/node_modules/
 /atvii-wb-typescript/node_modules/**
+/atviv-wb-typescript/client/node_modules/
+/atviv-wb-typescript/client/node_modules/**
 /node_modules/
 /node_modules/**
 /out/
