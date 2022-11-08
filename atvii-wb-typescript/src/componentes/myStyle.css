@@ -1,12 +1,17 @@
 a {
+<<<<<<< HEAD
     color: #ff80ab ;
+=======
+    color: #ff4081;
+>>>>>>> b2695550e3350193ab96b59f3c0f00720e08ab83
 }
 
 a:hover{
-    color: #b2dfdb;
+    color: #ff80ab;
 }
 
 #backgroundClientContainer{
+<<<<<<< HEAD
     height: 100%;
     padding: 10px 0 25px 0;
     background-color: #f0f0f0;
@@ -15,10 +20,21 @@ a:hover{
 #titleContainer{
     width: 27%;
     background-color: #ff80ab ;
+=======
+    background-color: #fce4ec;
+    height: 100vh;
+    padding: 5px 0;
+}
+
+#titleContainer{
+    width: 30%;
+    background-color: #ff4081;
+>>>>>>> b2695550e3350193ab96b59f3c0f00720e08ab83
     border-radius: 0 20px 20px 0;
 }
 
 #clientTitle{
+    width: 90%;
     color: #FFF;
 
     margin: 10px 0 30px 20px;
@@ -31,12 +47,17 @@ a:hover{
 }
 
 #collapsibleHeader:hover{
+<<<<<<< HEAD
     background-color: #ff80ab ;
     color: #FFF;
 }
 
 #collapsibleHeader{
     text-align: center;
+=======
+    background-color: #ff80ab;
+    color: #FFF;
+>>>>>>> b2695550e3350193ab96b59f3c0f00720e08ab83
 }
 
 #collapsibleBody{
@@ -65,4 +86,31 @@ a:hover{
     height: 50px;
 }
 
+
+/* -----------------------MODAL----------------------- */
+
+#modalLine{
+    margin-bottom: 0;
+}
+
+#cancelButtonContainer{
+    color: #FFF;
+    margin: 0 7px 0 0; 
+    background-color: #c0c0c0;
+}
+
+#cadastrarButtonContainer{
+    color: #FFF;
+    margin: 0 7px 0 0; 
+    background-color: #ff80ab;
+}
+
+
+#cancelButton{
+    color: #fff;
+}
+
+#sendButton{
+    color: #fff;
+}
 

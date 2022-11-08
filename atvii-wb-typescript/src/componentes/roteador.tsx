@@ -1,6 +1,7 @@
 import { Component } from "react";
 import BarraNavegacao from "./barraNavegacao";
 import FormularioCadastroCliente from "./formularioCadastroCliente";
+import FormularioCadastroProduto from "./listaProduto";
 import ListaCliente from "./listaCliente";
 
 type state = {
@@ -25,7 +26,7 @@ export default class Roteador extends Component<{}, state> {
     }
 
     render() {
-        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Clientes', 'Cadastro Cliente', 'Produtos', 'Serviços']} />
+        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Clientes', 'Produtos', 'Serviços' ]} />
         if (this.state.tela === 'Clientes') {
             return (
                 <>
@@ -33,11 +34,11 @@ export default class Roteador extends Component<{}, state> {
                     <ListaCliente tema="#ff4081 pink accent-2" />
                 </>
             )
-        } else if (this.state.tela === "Cadastro Cliente") {
+        } else if (this.state.tela === "Produtos") {
             return (
                 <>
                     {barraNavegacao}
-                    <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
+                    <FormularioCadastroProduto tema="#ff4081 pink accent-2" />
                 </>
             )
         }
