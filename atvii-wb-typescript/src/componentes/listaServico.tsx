@@ -4,16 +4,16 @@ import { Component } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css'
 import './myStyle.css'
-import FormularioCadastroProduto from "./formularioCadastroProduto";
-import VendaProduto from "./vendaProduto";
-import VendaProdutoAll from "./vendaProdutoAll";
+import FormularioCadastroServico from "./formularioCadastroServico";
+import VendaServico from "./vendaServico";
+import VendaServicoAll from "./vendaServicoAll";
 
 
 type props = {
     tema: string
 }
 
-export default class ListaProduto extends Component<props> {
+export default class ListaServico extends Component<props> {
 
     componentDidMount() {
         var elems = document.querySelectorAll('.collapsible');
@@ -28,17 +28,17 @@ export default class ListaProduto extends Component<props> {
         return (
             <div id="backgroundClientContainer">
                 <div id="titleContainer">
-                    <h4 id="Title">Produtos cadastrados</h4>
+                    <h4 id="Title">Serviços cadastrados</h4>
                 </div>
                 <div id="collapsibleContainer">
                     <ul className="collapsible">
                         <li >
                             <div id="collapsibleHeader" className="collapsible-header">
-                                Esmalte
+                                Manicure e Pedicure
                             </div>
                             <div id="collapsibleBody" className="collapsible-body">
-                                <span>Preço R$: 5,00</span><br />
-                                <span>Quantidade vendida: 3</span><br />
+                                <span>Preço R$: 30,00</span><br />
+                                <span>Quantidade vendida: 6</span><br />
 
                                 <div id="editDeleteButtonContainer">
                                     <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
@@ -49,33 +49,31 @@ export default class ListaProduto extends Component<props> {
                         </li>
                         <li className="">
                             <div id="collapsibleHeader" className="collapsible-header">
-                                Shampoo
+                                Corte de Cabelo
                             </div>
                             <div id="collapsibleBody" className="collapsible-body">
-                                <span>Preço R$: 9,00</span><br />
-                                <span>Quantidade vendida: 6</span><br />
+                                <span>Preço R$: 50,00</span><br />
+                                <span>Quantidade vendida: 2</span><br />
 
                                 <div id="editDeleteButtonContainer">
                                     <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
                                     <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
                                     <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-
                                 </div>
                             </div>
                         </li>
                         <li >
                             <div id="collapsibleHeader" className="collapsible-header">
-                                Condicionador
+                                Tintura
                             </div>
                             <div id="collapsibleBody" className="collapsible-body">
-                                <span>Preço R$: 13,00</span><br />
-                                <span>Quantidade vendida: 5</span><br />
+                                <span>Preço R$: 100,00</span><br />
+                                <span>Quantidade vendida: 9</span><br />
 
                                 <div id="editDeleteButtonContainer">
                                     <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
                                     <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
                                     <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-
                                 </div>
                             </div>
                         </li>
@@ -88,12 +86,10 @@ export default class ListaProduto extends Component<props> {
                     <a href="#modalSellAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">monetization_on</i></a>
                 </div>
 
-{/* ---------------------------------------------------------MODAL--------------------------------------------------------- */}
 
                 <div id="modalCadastro" className="modal modal-fixed-footer">
                     <div className="modal-content">
-                        <h5>Cadastro de Produtos</h5>
-                        <FormularioCadastroProduto tema="#ff4081 pink accent-2" />
+                        <FormularioCadastroServico tema="#ff4081 pink accent-2" />
                     </div>
                     <div className="modal-footer">
                         <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
@@ -107,8 +103,7 @@ export default class ListaProduto extends Component<props> {
 
                 <div id="modalEdit" className="modal modal-fixed-footer">
                     <div className="modal-content">
-                        <h5>Edição de Produtos</h5>
-                        <FormularioCadastroProduto tema="#ff4081 pink accent-2" />
+                        <FormularioCadastroServico tema="#ff4081 pink accent-2" />
                     </div>
                     <div className="modal-footer">
                         <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
@@ -123,7 +118,7 @@ export default class ListaProduto extends Component<props> {
                 <div id="modalSell" className="modal modal-fixed-footer">
                     <div className="modal-content">
                         <h5>Venda</h5>
-                        <VendaProduto tema="#ff4081 pink accent-2" />
+                        <VendaServico tema="#ff4081 pink accent-2" />
                     </div>
                     <div className="modal-footer">
                         <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
@@ -138,7 +133,7 @@ export default class ListaProduto extends Component<props> {
                 <div id="modalSellAll" className="modal modal-fixed-footer">
                     <div className="modal-content">
                         <h5>Venda</h5>
-                        <VendaProdutoAll tema="#ff4081 pink accent-2" />
+                        <VendaServicoAll tema="#ff4081 pink accent-2" />
                     </div>
                     <div className="modal-footer">
                         <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">

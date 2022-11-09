@@ -6,10 +6,15 @@ type props = {
 
 export default class FormularioCadastroCliente extends Component<props> {
 
+
+    componentDidMount(): void {
+        var elems = document.querySelectorAll('select');
+        M.FormSelect.init(elems);
+    }
+
     render() {
         return (
             <>
-                <h5>Cadastro de Cliente</h5>
                 <div className="row">
                     <form className="col s12">
                         <div id="modalLine" className="row">
@@ -20,6 +25,31 @@ export default class FormularioCadastroCliente extends Component<props> {
                             <div className="input-field col s5">
                                 <input id="last_name" type="text" className="validate" />
                                 <label htmlFor="last_name">sobrenome</label>
+                            </div>
+                        </div>
+                        <div id="modalLine" className="row">
+                            <div className="input-field col s12">
+                                <input id="socialName" type="text" className="validate" />
+                                <label htmlFor="socialName">Nome Social</label>
+                            </div>
+                        </div>
+                        <div id="modalLine" className="row">
+                            <div className="input-field col s5">
+                                <select>
+                                    <option value="">Escolha uma opção</option>
+                                    <option value="1">Feminino</option>
+                                    <option value="2">Masculino</option>
+                                    <option value="3">Outro</option>
+                                </select>
+                                <label htmlFor="gender">Sexo</label>
+                            </div>
+                            <div className="input-field col s3">
+                                <input id="BirthdayDate" type="date" className="validate" />
+                                <label htmlFor="BirthdayDate">Data de Nascimento</label>
+                            </div>
+                            <div className="input-field col s4">
+                                <input id="CPF" type="text" className="validate" />
+                                <label htmlFor="CPF">CPF</label>
                             </div>
                         </div>
                         <div id="modalLine" className="row">
@@ -62,7 +92,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                             </div>
                         </div>
                         <div id="modalLine" className="row">
-                        <div className="input-field col s4">
+                            <div className="input-field col s4">
                                 <input id="bairro" type="text" className="validate" />
                                 <label htmlFor="bairro">Bairro</label>
                             </div>

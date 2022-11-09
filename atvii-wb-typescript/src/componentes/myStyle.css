@@ -1,39 +1,35 @@
 a {
-<<<<<<< HEAD
-    color: #ff80ab ;
-=======
     color: #ff4081;
->>>>>>> b2695550e3350193ab96b59f3c0f00720e08ab83
 }
 
-a:hover{
+a:hover {
     color: #ff80ab;
 }
 
-#backgroundClientContainer{
-<<<<<<< HEAD
-    height: 100%;
-    padding: 10px 0 25px 0;
-    background-color: #f0f0f0;
+#homeContainer {
+    background-color: #fce4ec;
+    width: 90%;
+    margin: 200px auto;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 40px;
+    color: #ff4081;
 }
 
-#titleContainer{
-    width: 27%;
-    background-color: #ff80ab ;
-=======
+#backgroundClientContainer {
     background-color: #fce4ec;
     height: 100vh;
-    padding: 5px 0;
+    padding: 10px 0;
 }
 
-#titleContainer{
+#titleContainer {
     width: 30%;
     background-color: #ff4081;
->>>>>>> b2695550e3350193ab96b59f3c0f00720e08ab83
     border-radius: 0 20px 20px 0;
 }
 
-#clientTitle{
+#Title {
     width: 90%;
     color: #FFF;
 
@@ -41,40 +37,31 @@ a:hover{
     padding: 10px 0 10px 0;
 }
 
-#collapsibleContainer{
+#collapsibleContainer {
     width: 80%;
     margin: 0 auto;
 }
 
-#collapsibleHeader:hover{
-<<<<<<< HEAD
-    background-color: #ff80ab ;
-    color: #FFF;
-}
-
-#collapsibleHeader{
-    text-align: center;
-=======
+#collapsibleHeader:hover {
     background-color: #ff80ab;
     color: #FFF;
->>>>>>> b2695550e3350193ab96b59f3c0f00720e08ab83
 }
 
-#collapsibleBody{
+#collapsibleBody {
     background-color: #fff;
 }
 
-#editDeleteButtonContainer{
+#editDeleteButtonContainer {
     display: flex;
     justify-content: flex-end;
     margin: 3px;
 }
 
-#editDeleteButton{
+#editDeleteButton {
     margin: 0 5px 0 12px;
 }
 
-#addButtonContainer{
+#addButtonContainer {
     margin: 0 20px 10px 0;
     display: flex;
     justify-content: center;
@@ -86,31 +73,69 @@ a:hover{
     height: 50px;
 }
 
+#sellButtonContainer {
+    margin: 0 20px 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 112px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+}
+
 
 /* -----------------------MODAL----------------------- */
 
-#modalLine{
+#modalLine {
     margin-bottom: 0;
 }
 
-#cancelButtonContainer{
+#cancelButtonContainer {
     color: #FFF;
-    margin: 0 7px 0 0; 
+    margin: 0 7px 0 0;
     background-color: #c0c0c0;
 }
 
-#cadastrarButtonContainer{
+#cadastrarButtonContainer {
     color: #FFF;
-    margin: 0 7px 0 0; 
+    margin: 0 7px 0 0;
     background-color: #ff80ab;
 }
 
 
-#cancelButton{
+#cancelButton {
     color: #fff;
 }
 
-#sendButton{
+#sendButton {
     color: #fff;
 }
 
+/* ---------------------------------VENDA--------------------------------- */
+
+#vendaContainer {
+    background-color: #fce4ec;
+    width: 40%;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 30px;
+}
+
+
+#cancelButtonVendaContainer {
+    color: #FFF;
+    width: 100%;
+    background-color: #c0c0c0;
+}
+
+#confirmButtonVendaContainer {
+    color: #FFF;
+    width: 100%;
+    background-color: #ff80ab;
+}
+
+#vendaModalLine {
+    margin: 0;
+}

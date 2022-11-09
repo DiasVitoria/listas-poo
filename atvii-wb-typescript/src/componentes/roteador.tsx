@@ -1,8 +1,9 @@
 import { Component } from "react";
 import BarraNavegacao from "./barraNavegacao";
-import FormularioCadastroCliente from "./formularioCadastroCliente";
-import FormularioCadastroProduto from "./listaProduto";
 import ListaCliente from "./listaCliente";
+import ListaProduto from "./listaProduto";
+import ListaServico from "./listaServico";
+import Home from "./home";
 
 type state = {
     tela: string
@@ -12,7 +13,7 @@ export default class Roteador extends Component<{}, state> {
     constructor(props: {} | Readonly<{}>) {
         super(props)
         this.state = {
-            tela: 'Clientes'
+            tela: 'Home'
         }
         this.selecionarView = this.selecionarView.bind(this)
     }
@@ -26,7 +27,7 @@ export default class Roteador extends Component<{}, state> {
     }
 
     render() {
-        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Clientes', 'Produtos', 'Serviços' ]} />
+        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Home','Clientes', 'Produtos', 'Serviços']} />
         if (this.state.tela === 'Clientes') {
             return (
                 <>
@@ -38,10 +39,23 @@ export default class Roteador extends Component<{}, state> {
             return (
                 <>
                     {barraNavegacao}
-                    <FormularioCadastroProduto tema="#ff4081 pink accent-2" />
+                    <ListaProduto tema="#ff4081 pink accent-2" />
+                </>
+            )
+        } else if (this.state.tela === "Serviços") {
+            return (
+                <>
+                    {barraNavegacao}
+                    <ListaServico tema="#ff4081 pink accent-2" />
+                </>
+            )
+        } else if (this.state.tela === "Home") {
+            return (
+                <>
+                    {barraNavegacao}
+                    <Home tema="#ff4081 pink accent-2" />
                 </>
             )
         }
-
     }
 }
