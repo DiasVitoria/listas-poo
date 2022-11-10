@@ -42,6 +42,12 @@ a:hover {
     margin: 0 auto;
 }
 
+#historyCollapsibleContainer {
+    width: 100%;
+    margin: 30px auto;
+
+}
+
 #collapsibleHeader:hover {
     background-color: #ff80ab;
     color: #FFF;
@@ -57,7 +63,17 @@ a:hover {
     margin: 3px;
 }
 
+#totalContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 3px;
+}
+
 #editDeleteButton {
+    margin: 0 5px 0 12px;
+}
+
+#total {
     margin: 0 5px 0 12px;
 }
 
@@ -85,6 +101,18 @@ a:hover {
     height: 50px;
 }
 
+#historyButtonContainer {
+    margin: 0 20px 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 198px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+}
+
 
 /* -----------------------MODAL----------------------- */
 
@@ -104,7 +132,6 @@ a:hover {
     background-color: #ff80ab;
 }
 
-
 #cancelButton {
     color: #fff;
 }
@@ -122,7 +149,6 @@ a:hover {
     padding: 30px;
     border-radius: 30px;
 }
-
 
 #cancelButtonVendaContainer {
     color: #FFF;

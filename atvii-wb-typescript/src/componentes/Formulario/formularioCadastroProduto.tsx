@@ -21,6 +21,12 @@ export default class FormularioCadastroProduto extends Component<props> {
                                 <label htmlFor="price">Preço</label>
                             </div>
                         </div>
+                        <div id="modalLine" className="row">
+                            <div className="input-field col s12">
+                                <input id="estoque" type="text" className="validate" />
+                                <label htmlFor="estoque">Em estoque</label>
+                            </div>
+                        </div>
                     </form>
                 </div >
             </>

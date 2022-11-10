@@ -24,7 +24,7 @@ export default class Venda extends Component<props> {
                                     <option value="1">Serviço</option>
                                     <option value="2">Produto</option>
                                 </select>
-                                <label htmlFor="option"></label>
+                                <label htmlFor="option">Opção</label>
                             </div>
                             <div className="input-field col s6">
                                 <select id="option">
@@ -33,7 +33,7 @@ export default class Venda extends Component<props> {
                                     <option value="2">Shampoo</option>
                                     <option value="3">Condicionador</option>
                                 </select>
-                                <label htmlFor="option"></label>
+                                <label htmlFor="option">Escolha um Produto</label>
                             </div>
                             <div id="vendaModalLine" className="row">
                                 <div className="input-field col s12">
@@ -42,7 +42,7 @@ export default class Venda extends Component<props> {
                                         <option value="1">Vitoria</option>
                                         <option value="2">Thales</option>
                                     </select>
-                                    <label htmlFor="option"></label>
+                                    <label htmlFor="option">Escolha um Cliente</label>
                                 </div>
                             </div>
                         </div>

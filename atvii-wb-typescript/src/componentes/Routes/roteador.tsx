@@ -1,9 +1,9 @@
 import { Component } from "react";
 import BarraNavegacao from "./barraNavegacao";
-import ListaCliente from "./listaCliente";
-import ListaProduto from "./listaProduto";
-import ListaServico from "./listaServico";
-import Home from "./home";
+import ListaCliente from "../Lista/listaCliente";
+import ListaProduto from "../Lista/listaProduto";
+import ListaServico from "../Lista/listaServico";
+import Home from "../home";
 
 type state = {
     tela: string
@@ -13,7 +13,7 @@ export default class Roteador extends Component<{}, state> {
     constructor(props: {} | Readonly<{}>) {
         super(props)
         this.state = {
-            tela: 'Home'
+            tela: 'Clientes'
         }
         this.selecionarView = this.selecionarView.bind(this)
     }

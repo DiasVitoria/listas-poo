@@ -3,17 +3,63 @@
 import { Component } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css'
-import './myStyle.css'
-import FormularioCadastroProduto from "./formularioCadastroProduto";
-import VendaProduto from "./vendaProduto";
-import VendaProdutoAll from "./vendaProdutoAll";
+import '../Style/myStyle.css'
+import FormularioCadastroProduto from "../Formulario/formularioCadastroProduto";
+import VendaProduto from "../Vendas/vendaProduto";
+import VendaProdutoAll from "../Vendas/vendaProdutoAll";
+import HistoricoProdutoAll from "../Historico/HistoricoProduto/historicoProdutoAll";
+import HistoricoEsmalte from "../Historico/HistoricoProduto/historicoEsmalte";
+import HistoricoCondicionador from "../Historico/HistoricoProduto/historicoCondicionador";
+import HistoricoShampoo from "../Historico/HistoricoProduto/historicoShampoo";
 
 
 type props = {
     tema: string
 }
 
-export default class ListaProduto extends Component<props> {
+type state = {
+    nome: string;
+}
+
+export default class ListaProduto extends Component<props, state> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            nome: ''
+        }
+    }
+
+    clickEsmalte = () => {
+        this.setState({
+            nome: 'Esmalte'
+        })
+    }
+
+    clickShampoo = () => {
+        this.setState({
+            nome: 'Shampoo'
+        })
+    }
+
+    clickCondicionador = () => {
+        this.setState({
+            nome: 'Condicionador'
+        })
+    }
+
+
+
+    historico() {
+        if (this.state.nome === 'Esmalte') {
+            return (<HistoricoEsmalte tema="#ff4081 pink accent-2" />)
+        } else if (this.state.nome === 'Condicionador') {
+            return (<HistoricoCondicionador tema="#ff4081 pink accent-2" />)
+        } else if (this.state.nome === 'Shampoo') {
+            return (<HistoricoShampoo tema="#ff4081 pink accent-2" />)
+        }
+    }
+
 
     componentDidMount() {
         var elems = document.querySelectorAll('.collapsible');
@@ -32,53 +78,59 @@ export default class ListaProduto extends Component<props> {
                 </div>
                 <div id="collapsibleContainer">
                     <ul className="collapsible">
-                        <li >
-                            <div id="collapsibleHeader" className="collapsible-header">
-                                Esmalte
-                            </div>
-                            <div id="collapsibleBody" className="collapsible-body">
-                                <span>Preço R$: 5,00</span><br />
-                                <span>Quantidade vendida: 3</span><br />
-
-                                <div id="editDeleteButtonContainer">
-                                    <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
-                                    <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
-                                    <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li className="">
-                            <div id="collapsibleHeader" className="collapsible-header">
-                                Shampoo
-                            </div>
-                            <div id="collapsibleBody" className="collapsible-body">
-                                <span>Preço R$: 9,00</span><br />
-                                <span>Quantidade vendida: 6</span><br />
-
-                                <div id="editDeleteButtonContainer">
-                                    <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
-                                    <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
-                                    <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-
-                                </div>
-                            </div>
-                        </li>
-                        <li >
+                        <li>
                             <div id="collapsibleHeader" className="collapsible-header">
                                 Condicionador
                             </div>
                             <div id="collapsibleBody" className="collapsible-body">
                                 <span>Preço R$: 13,00</span><br />
                                 <span>Quantidade vendida: 5</span><br />
+                                <span>Quantidade em estoque: 10</span><br />
+                                <div id="editDeleteButtonContainer">
+                                    <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
+                                    <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
+                                    <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
+                                    <a href="#modalHistory" onClick={this.clickCondicionador} id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="collapsibleHeader" className="collapsible-header">
+                                Esmalte
+                            </div>
+                            <div id="collapsibleBody" className="collapsible-body">
+                                <span>Preço R$: 5,00</span><br />
+                                <span>Quantidade vendida: 3</span><br />
+                                <span>Quantidade em estoque: 13</span><br />
 
                                 <div id="editDeleteButtonContainer">
                                     <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
                                     <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
                                     <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
+                                    <a href="#modalHistory" onClick={this.clickEsmalte} id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="collapsibleHeader" className="collapsible-header">
+                                Shampoo
+                            </div>
+                            <div id="collapsibleBody" className="collapsible-body">
+                                <span>Preço R$: 9,00</span><br />
+                                <span>Quantidade vendida: 6</span><br />
+                                <span>Quantidade em estoque: 3</span><br />
+
+                                <div id="editDeleteButtonContainer">
+                                    <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
+                                    <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
+                                    <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
+                                    <a href="#modalHistory" onClick={this.clickShampoo} id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
 
                                 </div>
                             </div>
                         </li>
+
                     </ul>
                 </div>
                 <div id="addButtonContainer">
@@ -88,7 +140,11 @@ export default class ListaProduto extends Component<props> {
                     <a href="#modalSellAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">monetization_on</i></a>
                 </div>
 
-{/* ---------------------------------------------------------MODAL--------------------------------------------------------- */}
+                <div id="historyButtonContainer">
+                    <a href="#modalHistoryAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">access_time</i></a>
+                </div>
+
+                {/* ---------------------------------------------------------MODAL--------------------------------------------------------- */}
 
                 <div id="modalCadastro" className="modal modal-fixed-footer">
                     <div className="modal-content">
@@ -146,6 +202,30 @@ export default class ListaProduto extends Component<props> {
                         </button>
                         <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
                             <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Confirmar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="modalHistoryAll" className="modal modal-fixed-footer">
+                    <div className="modal-content">
+                        <h5>Histórico de Vendas</h5>
+                        <HistoricoProdutoAll tema="#ff4081 pink accent-2" />
+                    </div>
+                    <div className="modal-footer">
+                        <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
+                            <a href="#!"><i id="sendButton" className="material-icons right">check</i></a>Ok
+                        </button>
+                    </div>
+                </div>
+
+                <div id="modalHistory" className="modal modal-fixed-footer">
+                    <div className="modal-content">
+                        <h5>Histórico de Vendas</h5>
+                        {this.historico()}
+                    </div>
+                    <div className="modal-footer">
+                        <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
+                            <a href="#!"><i id="sendButton" className="material-icons right">check</i></a>Ok
                         </button>
                     </div>
                 </div>
