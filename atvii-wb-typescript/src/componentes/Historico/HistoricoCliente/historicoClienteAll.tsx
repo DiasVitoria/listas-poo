@@ -38,7 +38,7 @@ export default class HistoricoClienteAll extends Component<props> {
                             <h5>Serviços</h5>
                             <span>2x Corte de Cabelo</span><br />
                             <hr />
-                            <span>Total Produto: R$: 100,00</span>
+                            <span>Total Serviço: R$: 100,00</span>
                             <div id="totalContainer">
                                 <span id="total">Total: R$: 175,00</span>
                             </div>
@@ -58,7 +58,7 @@ export default class HistoricoClienteAll extends Component<props> {
                             <h5>Serviços</h5>
                             <span>1x Manicure e Pedicure</span><br />
                             <hr />
-                            <span>Total Serviços: R$: 30,00</span>
+                            <span>Total Serviço: R$: 30,00</span>
                             <div id="totalContainer">
                                 <span id="total">Total: R$: 89,00</span>
                             </div>

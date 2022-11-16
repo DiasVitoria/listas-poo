@@ -40,8 +40,8 @@ export default class VendaCliente extends Component<props> {
                         <h6>Quantidade</h6>
                         <div id="vendaModalLine" className="row">
                             <div className="input-field col s12">
-                                <input id="bairro" type="text" className="validate" />
-                                <label htmlFor="bairro">Quantidade</label>
+                                <input id="quantidade" type="text" className="validate" />
+                                <label htmlFor="quantidade">Quantidade</label>
                             </div>
                         </div>
                     </form>

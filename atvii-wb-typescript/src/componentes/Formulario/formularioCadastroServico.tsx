@@ -9,7 +9,6 @@ export default class FormularioCadastroServico extends Component<props> {
     render() {
         return (
             <>
-                <h5>Cadastro de Serviço</h5>
                 <div className="row">
                     <form className="col s12">
                         <div id="modalLine" className="row">
