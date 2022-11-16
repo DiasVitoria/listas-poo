@@ -3,6 +3,7 @@ import BarraNavegacao from "./barraNavegacao";
 import ListaCliente from "../Lista/listaCliente";
 import ListaProduto from "../Lista/listaProduto";
 import ListaServico from "../Lista/listaServico";
+import Listagem from "../Lista/listagem";
 import Home from "../home";
 
 type state = {
@@ -27,8 +28,15 @@ export default class Roteador extends Component<{}, state> {
     }
 
     render() {
-        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Home','Clientes', 'Produtos', 'Serviços']} />
-        if (this.state.tela === 'Clientes') {
+        let barraNavegacao = <BarraNavegacao seletorView={this.selecionarView} tema="#ff4081 pink accent-2" botoes={['Home','Clientes', 'Produtos', 'Serviços', 'Listagem']} />
+        if (this.state.tela === "Home") {
+            return (
+                <>
+                    {barraNavegacao}
+                    <Home tema="#ff4081 pink accent-2" />
+                </>
+            )
+        } else if (this.state.tela === 'Clientes') {
             return (
                 <>
                     {barraNavegacao}
@@ -49,11 +57,11 @@ export default class Roteador extends Component<{}, state> {
                     <ListaServico tema="#ff4081 pink accent-2" />
                 </>
             )
-        } else if (this.state.tela === "Home") {
+        } else if (this.state.tela === "Listagem") {
             return (
                 <>
                     {barraNavegacao}
-                    <Home tema="#ff4081 pink accent-2" />
+                    <Listagem tema="#ff4081 pink accent-2" />
                 </>
             )
         }
