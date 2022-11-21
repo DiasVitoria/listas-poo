@@ -7,6 +7,12 @@
 /atvii-wb-typescript/node_modules/**
 /atviv-wb-typescript/client/node_modules/
 /atviv-wb-typescript/client/node_modules/**
+/atvv-wb-typescript/client/node_modules/
+/atvv-wb-typescript/client/node_modules/**
+/atvv-wb-typescript/server/node_modules/
+/atvv-wb-typescript/server/node_modules/**
+/atviii-wb-typescript/node_modules/
+/atviii-wb-typescript/node_modules/**
 /node_modules/
 /node_modules/**
 /out/
