@@ -18,10 +18,6 @@ const servico = database.define('servico', {
     preco: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    estoque: {
-        type: Sequelize.INTEGER,
-        allowNull: false
     }
 })
 

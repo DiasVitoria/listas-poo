@@ -3,13 +3,13 @@ const Sequelize = require('sequelize');
 
 const database = require('./connect')
 const clienteId = require('./clienteTable')
-const produtoId = require('./produtoTable')
+const servicoId = require('./servicoTable')
 
  
-clienteId.belongsToMany(produtoId, { through: 'clienteProduto' });
-produtoId.belongsToMany(clienteId, { through: 'clienteProduto' });
+clienteId.belongsToMany(servicoId, { through: 'clienteServico' });
+servicoId.belongsToMany(clienteId, { through: 'clienteServico' });
 
-const clienteProduto = database.define('clienteProduto', {
+const clienteServico = database.define('clienteServico', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -23,10 +23,10 @@ const clienteProduto = database.define('clienteProduto', {
           key: 'id'
         }
       },
-    produtoId: {
+    servicoId: {
         type: Sequelize.INTEGER,
         references: {
-          model: produtoId, 
+          model: servicoId, 
           key: 'id'
         }
       },
@@ -36,6 +36,6 @@ const clienteProduto = database.define('clienteProduto', {
     }
 })
 
-//clienteProduto.sync({ alter: true });
+//clienteServico.sync({ alter: true });
 
-module.exports = clienteProduto;
+module.exports = clienteServico;

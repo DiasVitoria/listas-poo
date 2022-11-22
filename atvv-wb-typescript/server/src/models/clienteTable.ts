@@ -19,11 +19,19 @@ const cliente = database.define('cliente', {
         type: Sequelize.STRING,
         allowNull: true
     },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     cpf: {
         type: Sequelize.STRING,
         allowNull: false
     },
     telefone:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    genero:{
         type: Sequelize.STRING,
         allowNull: false
     }

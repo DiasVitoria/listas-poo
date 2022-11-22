@@ -8,6 +8,11 @@ type props = {
     cliente: Cliente
 }
 
+type tel = {
+    ddd: string
+    numero: string
+}
+
 export default class FormularioEdicaoCliente extends Component<props> {
 
     private nome
@@ -21,7 +26,7 @@ export default class FormularioEdicaoCliente extends Component<props> {
         this.nome = this.props.cliente.nome
         this.sobrenome = this.props.cliente.sobreNome
         this.email = this.props.cliente.email
-        this.telefone = this.props.cliente.telefones[0]
+        this.telefone = this.props.cliente.telefones[this.props.cliente.telefones.length - 1]
         this.endereco = this.props.cliente.endereco
 
         this.onClickEmail = this.onClickEmail.bind(this)
@@ -54,7 +59,10 @@ export default class FormularioEdicaoCliente extends Component<props> {
             endereco: this.endereco,
             telefones: Array<Telefone>()
         }
-        mapeado.telefones.push(this.telefone)
+        let tel = new Telefone()
+        tel.ddd = this.telefone.ddd
+        tel.numero = this.telefone.numero
+        mapeado.telefones.push(tel)
         console.log(mapeado)
         await fetch("http://localhost:32832/cliente/atualizar", {
             method: "PUT",

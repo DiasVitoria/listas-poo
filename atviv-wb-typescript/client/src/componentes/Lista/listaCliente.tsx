@@ -139,7 +139,6 @@ export default class ListaCliente extends Component<prop, state> {
                       let tel = new Telefone()
                       tel.ddd = i.ddd
                       tel.numero = i.numero
-                      tel.id = i.id
                       cliente.telefones.push(tel)
                       return (
                         <>

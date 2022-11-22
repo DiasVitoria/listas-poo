@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-useless-constructor */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Component } from "react";
 
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css'
 import '../Style/myStyle.css'
 import FormularioCadastroCliente from "../Formulario/formularioCadastroCliente";
-import VendaCliente from "../Vendas/vendaCliente";
-import Venda from "../Vendas/venda";
-import HistoricoClienteAll from "../Historico/HistoricoCliente/historicoClienteAll";
-import HistoricoThales from "../Historico/HistoricoCliente/historicoThales";
-import HistoricoVitoria from "../Historico/HistoricoCliente/historicoVitoria";
+import FormularioEdicaoCliente from "../Formulario/edicao/formularioEdicaoCliente";
+import Cliente from "../../Models/cliente";
+import Swal from "sweetalert2";
 
 
 type prop = {
@@ -18,7 +14,8 @@ type prop = {
 };
 
 type state = {
-  nome: string;
+  clientes: Array<any>
+  clienteSelected: Cliente | undefined
 }
 
 export default class ListaCliente extends Component<prop, state> {
@@ -26,26 +23,11 @@ export default class ListaCliente extends Component<prop, state> {
   constructor(props) {
     super(props);
     this.state = {
-      nome: ''
+      clientes: [],
+      clienteSelected: undefined
     }
-  }
-
-  clickThales = () => {
-    this.setState({
-      nome: 'Thales'
-    })   
-  }
-
-  clickVitoria = () =>  {
-    this.setState({
-      nome: 'Vitoria'
-    })
-  }
-
-  clickVazio = () =>  {
-    this.setState({
-      nome: ''
-    })
+    this.onClickDelete = this.onClickDelete.bind(this)
+    this.onClickEdit = this.onClickEdit.bind(this)
   }
 
   componentDidMount() {
@@ -54,19 +36,76 @@ export default class ListaCliente extends Component<prop, state> {
 
     var elemsModal = document.querySelectorAll('.modal');
     M.Modal.init(elemsModal);
+
+    fetch("http://localhost:3001/cliente", {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(r => r.json()).then(r => {
+      this.setState({
+        clientes: r
+      })
+    });
   }
 
-
-  historico() {
-    if (this.state.nome === 'Thales') {
-      console.log(this.state.nome);
-      return (<HistoricoThales tema="#ff4081 pink accent-2" />)
-    } else if (this.state.nome === 'Vitoria') {
-      console.log(this.state.nome);
-      return (<HistoricoVitoria tema="#ff4081 pink accent-2" />)
-    }
+  onClickEdit(event){
+    let id = event.target.id
+    let idNumber = new Number(id).valueOf()
+    let cliente = this.state.clientes.find(item=> item.id == idNumber);
+    this.setState({
+      clienteSelected: cliente
+    })
   }
 
+  async deleteCliente(id): Promise<boolean>  {
+    let retorno = false
+    await fetch("http://localhost:3001/cliente/deletar/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      retorno = response.status === 200
+    })  
+    return retorno
+  }
+
+  onClickDelete(event) {
+    let id = event.target.id
+    Swal.fire({
+        title: 'Deletar cliente',
+        text: "Essa ação não pode ser revertida!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, deletar!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+            let deleted = await this.deleteCliente(id)
+            if(deleted){
+                Swal.fire(
+                    'Deletado!',
+                    'Cliente deletado com sucesso.',
+                    'success'
+                    ).then(result => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      window.location.reload()
+                    })
+            }else{
+                Swal.fire(
+                    'Erro!',
+                    'Um erro ocorreu.',
+                    'error'
+                    ).then(result => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      window.location.reload()
+                    })
+            }
+        }
+      })
+  }
 
   render() {
     return (
@@ -76,84 +115,30 @@ export default class ListaCliente extends Component<prop, state> {
         </div>
         <div id="collapsibleContainer">
           <ul className="collapsible">
-            <li >
-              <div id="collapsibleHeader" className="collapsible-header">
-                Francisco
-              </div>
-              <div id="collapsibleBody" className="collapsible-body">
-                <span>Nome Social: Fran</span><br />
-                <span>Sexo: O</span><br />
-                <span>Data de Nascimento: 28/10/1999</span><br />
-                <span>CPF: 12389314478</span><br />
-                <span>E-mail: francisco@francisco.com</span><br />
-                <span>DDD: 12</span><br />
-                <span>Telefone: 129489384</span><br />
-                <span>Endereço: </span><br />
-                <span>Taubaté-SP </span><br />
-                <span>12857463 </span><br />
-                <span>R. Dois, 3 </span><br />
-                <span>Sem Complemento</span><br />
-
-                <div id="editDeleteButtonContainer">
-                  <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
-                  <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
-                  <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-                  <a href="#modalHistory" onClick={this.clickVazio} id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div id="collapsibleHeader" className="collapsible-header">
-                Thales
-              </div>
-              <div id="collapsibleBody" className="collapsible-body">
-                <span>Nome Social: TK</span><br />
-                <span>Sexo: M</span><br />
-                <span>Data de Nascimento: 12/12/2000</span><br />
-                <span>CPF: 12345678912</span><br />
-                <span>E-mail: thales@thales.com</span><br />
-                <span>DDD: 12</span><br />
-                <span>Telefone: 987317482</span><br />
-                <span>Endereço: </span><br />
-                <span>São José dos Campos-SP </span><br />
-                <span>12345967 </span><br />
-                <span>R. Penedo, 300 </span><br />
-                <span>76B</span><br />
-
-                <div id="editDeleteButtonContainer">
-                  <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
-                  <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
-                  <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-                  <a href="#modalHistory" onClick={this.clickThales} id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
-                </div>
-              </div>
-            </li>
-            <li >
-              <div id="collapsibleHeader" className="collapsible-header">
-                Vitoria
-              </div>
-              <div id="collapsibleBody" className="collapsible-body">
-                <span>Nome Social: Vizz</span><br />
-                <span>Sexo: F</span><br />
-                <span>Data de Nascimento: 12/12/1999</span><br />
-                <span>CPF: 12345678912</span><br />
-                <span>E-mail: vitoria@vitoria.com</span><br />
-                <span>DDD: 12</span><br />
-                <span>Telefone: 12345678</span><br />
-                <span>Endereço: </span><br />
-                <span>Caçapava-SP </span><br />
-                <span>12280051 </span><br />
-                <span>R. Vinte e nove de abril, 37 </span><br />
-                <span>Sem Complemento</span><br />
-
-                <div id="editDeleteButtonContainer">
-                  <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">create</i></a>
-                  <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i className="small material-icons">delete</i></a>
-                  <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-                  <a href="#modalHistory" onClick={this.clickVitoria} id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
-                </div>
-              </div>
-            </li>
+            {this.state.clientes.map(item => {
+              let cliente = new Cliente(item.nome, item.nomeSocial, item.cpf, item.telefone, item.email, item.genero)
+              cliente.id = item.id
+              let dataCadastro = new Date(item.createdAt)
+              return (
+                <li key={cliente.nome}>
+                  <div id="collapsibleHeader" className="collapsible-header">
+                    {cliente.nome}
+                  </div>
+                  <div id="collapsibleBody" className="collapsible-body">
+                    <span>Gênero: {cliente.genero}</span><br />
+                    <span>Email: {cliente.email}</span><br />
+                    <span>Telefone: {cliente.telefone}</span><br />
+                    <span>CPF: {cliente.cpf}</span><br />
+                    <span>Cadastrado em: {dataCadastro.toLocaleString()}</span>
+                    <br />
+                    <div id="editDeleteButtonContainer">
+                      <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></a>
+                      <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></a>
+                    </div>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         </div>
 
@@ -161,98 +146,13 @@ export default class ListaCliente extends Component<prop, state> {
           <a href="#modalCadastro" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">add</i></a>
         </div>
 
-        <div id="sellButtonContainer">
-          <a href="#modalSellAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">monetization_on</i></a>
-        </div>
-
-        <div id="historyButtonContainer">
-          <a href="#modalHistoryAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">access_time</i></a>
-        </div>
-
         {/* ----------------------------------------------------------------MODAL---------------------------------------------------------------- */}
 
         <div id="modalCadastro" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Cadastro de Cliente</h5>
-            <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-            </button>
-            <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Cadastrar
-            </button>
-          </div>
+          <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
         </div>
-
         <div id="modalEdit" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Edição de Cliente</h5>
-            <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-            </button>
-            <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Atualizar
-            </button>
-          </div>
-        </div>
-
-        <div id="modalSell" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Venda</h5>
-            <VendaCliente tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-            </button>
-            <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Confirmar
-            </button>
-          </div>
-        </div>
-
-        <div id="modalSellAll" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Opções</h5>
-            <Venda tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-            </button>
-            <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Confirmar
-            </button>
-          </div>
-        </div>
-
-        <div id="modalHistoryAll" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Histórico de Vendas</h5>
-            <HistoricoClienteAll tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="sendButton" className="material-icons right">check</i></a>Ok
-            </button>
-          </div>
-        </div>
-
-        <div id="modalHistory" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Histórico de Vendas</h5>
-            {this.historico()}
-          </div>
-          <div className="modal-footer">
-            <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-              <a href="#!"><i id="sendButton" className="material-icons right">check</i></a>Ok
-            </button>
-          </div>
+          {this.state.clienteSelected !== undefined ? <FormularioEdicaoCliente cliente={this.state.clienteSelected} /> : <></>}
         </div>
       </div >
     );
