@@ -11,10 +11,14 @@ import OpcoesCliente from "../negocio/opcoes/opcoesCliente";
 import OpcoesProduto from "../negocio/opcoes/opcoesProduto";
 import OpcoesServico from "../negocio/opcoes/opcoesServico";
 import Vender from "../negocio/vendas/vender";
+import TestesValidarLista from "./teste";
 
 console.log(`Bem-vindo ao cadastro de clientes do Grupo World Beauty`)
 let empresa = new Empresa()
 let execucao = true
+
+let testesParaProfValidar = new TestesValidarLista(empresa.getClientes, empresa.getProdutos, empresa.getServicos)
+testesParaProfValidar.gerarUsuariosTeste()
 
 while (execucao) {
     console.log(`----------------------------------------------`);
