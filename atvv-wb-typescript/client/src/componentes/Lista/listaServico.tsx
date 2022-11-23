@@ -7,59 +7,110 @@ import "../Style/myStyle.css";
 import FormularioCadastroServico from "../Formulario/formularioCadastroServico";
 import VendaServico from "../Vendas/vendaServico";
 import VendaServicoAll from "../Vendas/vendaServicoAll";
+import Swal from "sweetalert2";
+import FormularioEdicaoServico from "../Formulario/edicao/formularioEdicaoServico";
+import Servico from "../../Models/servico";
 import HistoricoServicoAll from "../Historico/HistoricoServico/historicoServicoAll";
-import HistoricoCorte from "../Historico/HistoricoServico/historicoCorte";
-import HistoricoManicurePedicure from "../Historico/HistoricoServico/historicoManicurePedicure";
 
 type props = {
   tema: string;
 };
 
 type state = {
-  nome: string;
+  servicos: Array<any>
+  servicoSelected: Servico | undefined
 };
 
 export default class ListaServico extends Component<props, state> {
+
   constructor(props) {
     super(props);
     this.state = {
-      nome: "",
-    };
-  }
-
-  clickCorte = () => {
-    this.setState({
-      nome: "Corte de Cabelo",
-    });
-  };
-
-  clickManicurePedicure = () => {
-    this.setState({
-      nome: "Manicure e Pedicure",
-    });
-  };
-
-  clickVazio = () => {
-    this.setState({
-      nome: "",
-    });
-  };
-
-  historico() {
-    if (this.state.nome === "Corte de Cabelo") {
-      return <HistoricoCorte tema="#ff4081 pink accent-2" />;
-    } else if (this.state.nome === "Manicure e Pedicure") {
-      return <HistoricoManicurePedicure tema="#ff4081 pink accent-2" />;
+      servicos: [],
+      servicoSelected: undefined
     }
+    this.onClickDelete = this.onClickDelete.bind(this)
+    this.onClickEdit = this.onClickEdit.bind(this)
   }
 
   componentDidMount() {
-    var elems = document.querySelectorAll(".collapsible");
+    var elems = document.querySelectorAll('.collapsible');
     M.Collapsible.init(elems);
 
-    var elemsModal = document.querySelectorAll(".modal");
+    var elemsModal = document.querySelectorAll('.modal');
     M.Modal.init(elemsModal);
+
+    fetch("http://localhost:3001/servico", {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(r => r.json()).then(r => {
+      this.setState({
+        servicos: r
+      })
+    });
   }
+
+
+  onClickEdit(event) {
+    let id = event.target.id
+    let idNumber = new Number(id).valueOf()
+    let servico = this.state.servicos.find(item => item.id == idNumber);
+    this.setState({
+      servicoSelected: servico
+    })
+  }
+
+  async deleteServico(id): Promise<boolean> {
+    let retorno = false
+    await fetch("http://localhost:3001/servico/deletar/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      retorno = response.status === 200
+    })
+    return retorno
+  }
+
+  onClickDelete(event) {
+    let id = event.target.id
+    Swal.fire({
+      title: 'Deletar serviço',
+      text: "Essa ação não pode ser revertida!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let deleted = await this.deleteServico(id)
+        if (deleted) {
+          Swal.fire(
+            'Deletado!',
+            'Serviço deletado com sucesso.',
+            'success'
+          ).then(result => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.location.reload()
+          })
+        } else {
+          Swal.fire(
+            'Erro!',
+            'Um erro ocorreu.',
+            'error'
+          ).then(result => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.location.reload()
+          })
+        }
+      }
+    })
+  }
+
 
   render() {
     return (
@@ -69,136 +120,31 @@ export default class ListaServico extends Component<props, state> {
         </div>
         <div id="collapsibleContainer">
           <ul className="collapsible">
-            <li className="">
-              <div id="collapsibleHeader" className="collapsible-header">
-                Corte de Cabelo
-              </div>
-              <div id="collapsibleBody" className="collapsible-body">
-                <span>Preço R$: 50,00</span>
-                <br />
-                <span>Quantidade vendida: 2</span>
-                <br />
-
-                <div id="editDeleteButtonContainer">
-                  <a
-                    href="#modalEdit"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">create</i>
-                  </a>
-                  <a
-                    href="#"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse"
-                  >
-                    <i className="small material-icons">delete</i>
-                  </a>
-                  <a
-                    href="#modalSell"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">monetization_on</i>
-                  </a>
-                  <a
-                    href="#modalHistory"
-                    onClick={this.clickCorte}
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">access_time</i>
-                  </a>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div id="collapsibleHeader" className="collapsible-header">
-                Manicure e Pedicure
-              </div>
-              <div id="collapsibleBody" className="collapsible-body">
-                <span>Preço R$: 30,00</span>
-                <br />
-                <span>Quantidade vendida: 1</span>
-                <br />
-
-                <div id="editDeleteButtonContainer">
-                  <a
-                    href="#modalEdit"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">create</i>
-                  </a>
-                  <a
-                    href="#"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse"
-                  >
-                    <i className="small material-icons">delete</i>
-                  </a>
-                  <a
-                    href="#modalSell"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">monetization_on</i>
-                  </a>
-                  <a
-                    href="#modalHistory"
-                    onClick={this.clickManicurePedicure}
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">access_time</i>
-                  </a>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div id="collapsibleHeader" className="collapsible-header">
-                Tintura
-              </div>
-              <div id="collapsibleBody" className="collapsible-body">
-                <span>Preço R$: 100,00</span>
-                <br />
-                <span>Quantidade vendida: 0</span>
-                <br />
-
-                <div id="editDeleteButtonContainer">
-                  <a
-                    href="#modalEdit"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">create</i>
-                  </a>
-                  <a
-                    href="#"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse"
-                  >
-                    <i className="small material-icons">delete</i>
-                  </a>
-                  <a
-                    href="#modalSell"
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">monetization_on</i>
-                  </a>
-                  <a
-                    href="#modalHistory"
-                    onClick={this.clickVazio}
-                    id="editDeleteButton"
-                    className="btn-floating btn-medium pink accent-2 pulse modal-trigger"
-                  >
-                    <i className="small material-icons">access_time</i>
-                  </a>
-                </div>
-              </div>
-            </li>
+            {this.state.servicos.map(item => {
+              let servico = new Servico(item.nome, item.preco)
+              servico.id = item.id
+              let dataCadastro = new Date(item.createdAt)
+              return (
+                <li key={servico.nome}>
+                  <div id="collapsibleHeader" className="collapsible-header">
+                    {servico.nome}
+                  </div>
+                  <div id="collapsibleBody" className="collapsible-body">
+                    <span>Preço R$: {servico.preco}</span><br />
+                    <span>Cadastrado em: {dataCadastro.toLocaleString()}</span>
+                    <br />
+                    <div id="editDeleteButtonContainer">
+                      <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></a>
+                      <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></a>
+                      {/* Colocar para abrir modal de venda */}
+                      <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
+                      {/* Colocar para abrir modal de histórico */}
+                      <a href="#modalHistory" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
+                    </div>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         </div>
         <div id="addButtonContainer">
@@ -227,69 +173,11 @@ export default class ListaServico extends Component<props, state> {
         </div>
 
         <div id="modalCadastro" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Cadastro de Serviço</h5>
-            <FormularioCadastroServico tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button
-              id="cancelButtonContainer"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="cancelButton" className="material-icons right">
-                  cancel
-                </i>
-              </a>
-              Cancelar
-            </button>
-            <button
-              id="cadastrarButtonContainer"
-              type="submit"
-              name="action"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="sendButton" className="material-icons right">
-                  send
-                </i>
-              </a>
-              Cadastrar
-            </button>
-          </div>
+          <FormularioCadastroServico tema="#ff4081 pink accent-2" />
         </div>
 
         <div id="modalEdit" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Edição de Serviço</h5>
-            <FormularioCadastroServico tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button
-              id="cancelButtonContainer"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="cancelButton" className="material-icons right">
-                  cancel
-                </i>
-              </a>
-              Cancelar
-            </button>
-            <button
-              id="cadastrarButtonContainer"
-              type="submit"
-              name="action"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="sendButton" className="material-icons right">
-                  send
-                </i>
-              </a>
-              Atualizar
-            </button>
-          </div>
+          {this.state.servicoSelected !== undefined ? <FormularioEdicaoServico servico={this.state.servicoSelected} /> : <></>}
         </div>
 
         <div id="modalSell" className="modal modal-fixed-footer">
@@ -383,7 +271,7 @@ export default class ListaServico extends Component<props, state> {
         <div id="modalHistory" className="modal modal-fixed-footer">
           <div className="modal-content">
             <h5>Histórico de Vendas</h5>
-            {this.historico()}
+            {/* Colocar histórico de vendas de serviços */}
           </div>
           <div className="modal-footer">
             <button
