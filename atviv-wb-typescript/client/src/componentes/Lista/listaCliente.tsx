@@ -56,10 +56,10 @@ export default class ListaCliente extends Component<prop, state> {
   onClickEdit(event){
     let id = event.target.id
     let idNumber = new Number(id).valueOf()
-    let cliente = this.state.clientes.find(item=> item.id == idNumber);
+    let cliente = this.state.clientes.find(item=> item.id == idNumber);    
     this.setState({
       clienteSelected: cliente
-    })
+    })   
   }
 
   async deleteCliente(id): Promise<boolean>  {
@@ -126,6 +126,7 @@ export default class ListaCliente extends Component<prop, state> {
             {this.state.clientes.map(item => {
               let endereco = new Endereco(item.endereco.cidade, item.endereco.estado, item.endereco.rua, item.endereco.bairro, item.endereco.numero, item.endereco.informacoesAdicionais, item.endereco.codigoPostal)
               endereco.id = item.endereco.id
+              endereco.codigoPostal = item.endereco.codigoPostal
               let cliente = new Cliente(item.nome, item.sobreNome, item.email, endereco)
               cliente.id = item.id
               return (
@@ -177,7 +178,7 @@ export default class ListaCliente extends Component<prop, state> {
         <div id="modalCadastro" className="modal modal-fixed-footer">
           <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
         </div>
-        <div id="modalEdit" className="modal modal-fixed-footer">
+        <div id="modalEdit" className="modal modal-fixed-footer">          
           {this.state.clienteSelected !== undefined ? <FormularioEdicaoCliente cliente={this.state.clienteSelected} /> : <></>}
         </div>
       </div >

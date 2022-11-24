@@ -2,6 +2,7 @@ import { Component } from "react";
 import Swal from "sweetalert2";
 import Endereco from "../Modelo/endereco";
 import Telefone from "../Modelo/telefone";
+import VerificacaoNumero from "../verificacoes/verificacaoNumero";
 
 
 type props = {
@@ -12,7 +13,7 @@ export default class FormularioCadastroCliente extends Component<props> {
 
     private nome
     private sobrenome
-    private email
+    private email!: string
     private telefone: Telefone
     private endereco: Endereco
 
@@ -62,10 +63,48 @@ export default class FormularioCadastroCliente extends Component<props> {
     }
 
     async onSubmit() {
+
+
         if (!this.nome || !this.sobrenome || !this.email || !this.telefone.ddd || !this.telefone.numero || !this.endereco.rua || !this.endereco.numero || !this.endereco.bairro || !this.endereco.cidade || !this.endereco.estado || !this.endereco.codigoPostal || !this.endereco.informacoesAdicionais) {
             Swal.fire(
                 'Erro!',
                 'Preencha todos os campos.',
+                'error'
+            )
+            return
+        }
+
+        if (!this.email.includes("@") || !this.email.includes('.com')) {
+            Swal.fire(
+                'Erro!',
+                'E-mail incorreto.',
+                'error'
+            )
+            return
+        }
+
+        if ((this.telefone.ddd + "").length < 2) {
+            Swal.fire(
+                'Erro!',
+                'DDD inválido.',
+                'error'
+            )
+            return
+        }
+
+        if ((this.telefone.numero + "").length < 9) {
+            Swal.fire(
+                'Erro!',
+                'Número de telefone inválido.',
+                'error'
+            )
+            return
+        }
+
+        if ((this.endereco.codigoPostal + "").length < 8) {
+            Swal.fire(
+                'Erro!',
+                'CEP inválido.',
                 'error'
             )
             return
@@ -103,9 +142,15 @@ export default class FormularioCadastroCliente extends Component<props> {
         this.email = event.target.value
     }
     onClickTelefoneDDD(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength)
+        }
         this.telefone.ddd = event.target.value
     }
     onClickTelefoneNumero(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength)
+        }
         this.telefone.numero = event.target.value
     }
     onClickEnderecoCidade(event) {
@@ -115,6 +160,9 @@ export default class FormularioCadastroCliente extends Component<props> {
         this.endereco.estado = event.target.value
     }
     onClickEnderecoCEP(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength)
+        }
         this.endereco.codigoPostal = event.target.value
     }
     onClickEnderecoRua(event) {
@@ -139,68 +187,69 @@ export default class FormularioCadastroCliente extends Component<props> {
                         <form className="col s12">
                             <div id="modalLine" className="row">
                                 <div className="input-field col s7">
-                                    <input onChange={this.onClickNome} id="first_name" type="text" className="validate" />
+                                    <input onChange={this.onClickNome} id="first_name" type="text" />
                                     <label htmlFor="first_name">nome</label>
                                 </div>
                                 <div className="input-field col s5">
-                                    <input id="last_name" onChange={this.onClickSobreNome} type="text" className="validate" />
+                                    <input id="last_name" onChange={this.onClickSobreNome} type="text" />
                                     <label htmlFor="last_name">sobrenome</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input id="email" onChange={this.onClickEmail} type="email" className="validate" />
+                                    <input id="email" onChange={this.onClickEmail} type="text" />
                                     <label htmlFor="email">E-mail</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s2">
-                                    <input id="ddd" onChange={this.onClickTelefoneDDD} type="number" className="validate" />
+                                    <input id="ddd" onChange={this.onClickTelefoneDDD} type="number" maxLength={2} />
                                     <label htmlFor="ddd">DDD</label>
                                 </div>
                                 <div className="input-field col s4">
-                                    <input id="number" onChange={this.onClickTelefoneNumero} type="number" className="validate" />
+                                    <input id="number" onChange={this.onClickTelefoneNumero} type="number" maxLength={9} />
                                     <label htmlFor="number">Número</label>
                                 </div>
                             </div>
                             <h6>Endereço</h6>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s11">
-                                    <input id="rua" type="text" onChange={this.onClickEnderecoRua} className="validate" />
+                                    <input id="rua" type="text" onChange={this.onClickEnderecoRua} />
                                     <label htmlFor="rua">Rua</label>
                                 </div>
                                 <div className="input-field col s1">
-                                    <input id="numero" onChange={this.onClickEnderecoNumero} type="number" className="validate" />
+                                    <input id="numero" onChange={this.onClickEnderecoNumero} type="number" />
                                     <label htmlFor="numero">Nº</label>
                                 </div>
                             </div>
 
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input id="bairro" type="text" onChange={this.onClickEnderecoBairro} className="validate" />
+                                    <input id="bairro" type="text" onChange={this.onClickEnderecoBairro} />
                                     <label htmlFor="bairro">Bairro</label>
                                 </div>
                             </div>
 
                             <div id="modalLine" className="row">
                                 <div className="input-field col s7">
-                                    <input id="cidade" onChange={this.onClickEnderecoCidade} type="text" className="validate" />
+                                    <input id="cidade" onChange={this.onClickEnderecoCidade} type="text" />
                                     <label htmlFor="cidade">Cidade</label>
                                 </div>
                                 <div className="input-field col s2">
-                                    <input id="estado" onChange={this.onClickEnderecoEstado} type="text" className="validate" />
+                                    <input id="estado" onChange={this.onClickEnderecoEstado} type="text" />
                                     <label htmlFor="estado">Estado</label>
                                 </div>
                                 <div className="input-field col s3">
-                                    <input id="cep" onChange={this.onClickEnderecoCEP} type="number" className="validate" />
+                                    <input id="cep" onChange={this.onClickEnderecoCEP} type="number" maxLength={8} />
                                     <label htmlFor="cep">CEP</label>
+                                    <span className="helper-text">Somente números</span>
                                 </div>
                             </div>
 
                             <h6>Informações adicionais</h6>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input id="complemento" onChange={this.onClickEnderecoComplemento} type="text" className="validate" />
+                                    <textarea id="complemento" className="materialize-textarea" onChange={this.onClickEnderecoComplemento} ></textarea>
                                     <label htmlFor="complemento">Informações</label>
                                 </div>
                             </div>
@@ -219,4 +268,8 @@ export default class FormularioCadastroCliente extends Component<props> {
             </>
         )
     }
+}
+
+function mphone(value: any) {
+    throw new Error("Function not implemented.");
 }

@@ -7,6 +7,7 @@ import FormularioCadastroCliente from "../Formulario/formularioCadastroCliente";
 import FormularioEdicaoCliente from "../Formulario/edicao/formularioEdicaoCliente";
 import Cliente from "../../Models/cliente";
 import Swal from "sweetalert2";
+import ModalTeste from "../Formulario/edicao/modal";
 
 
 type prop = {
@@ -20,6 +21,8 @@ type state = {
 
 export default class ListaCliente extends Component<prop, state> {
 
+
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -56,6 +59,13 @@ export default class ListaCliente extends Component<prop, state> {
     this.setState({
       clienteSelected: cliente
     })
+  }
+
+  componentDidUpdate(prevProps: Readonly<prop>, prevState: Readonly<state>, snapshot?: any): void {
+    if(prevState.clienteSelected != this.state.clienteSelected){
+      var elemsModal = document.querySelectorAll('.modal');
+      M.Modal.init(elemsModal);
+    }
   }
 
   async deleteCliente(id): Promise<boolean>  {
@@ -132,8 +142,8 @@ export default class ListaCliente extends Component<prop, state> {
                     <span>Cadastrado em: {dataCadastro.toLocaleString()}</span>
                     <br />
                     <div id="editDeleteButtonContainer">
-                      <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></a>
-                      <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></a>
+                      <button id="editDeleteButton" data-target="modalEdit" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></button>
+                      <button id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></button>
                     </div>
                   </div>
                 </li>
@@ -152,7 +162,7 @@ export default class ListaCliente extends Component<prop, state> {
           <FormularioCadastroCliente tema="#ff4081 pink accent-2" />
         </div>
         <div id="modalEdit" className="modal modal-fixed-footer">
-          {this.state.clienteSelected !== undefined ? <FormularioEdicaoCliente cliente={this.state.clienteSelected} /> : <></>}
+          {this.state.clienteSelected?.id && <FormularioEdicaoCliente cliente={this.state.clienteSelected} />}
         </div>
       </div >
     );

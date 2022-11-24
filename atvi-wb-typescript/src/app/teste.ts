@@ -73,11 +73,11 @@ export default class TestesValidarLista{
         this.produtos.push(new Produto('Agua com gas', 5))
         
         //Serviços
-        this.servicos.push(new Servico('Corte cabelo masculino', 25))
-        this.servicos.push(new Servico('Corte cabelo feminino', 30))
-        this.servicos.push(new Servico('Pintar cabelo', 50))
-        this.servicos.push(new Servico('Luzes', 50))
-        this.servicos.push(new Servico('Alisamento', 40))
+        this.servicos.push(new Servico('Corte de cabelo masculino', 25))
+        this.servicos.push(new Servico('Corte de cabelo feminino', 30))
+        this.servicos.push(new Servico('Tintura', 50))
+        this.servicos.push(new Servico('Luzes', 80))
+        this.servicos.push(new Servico('Progressiva', 100))
         this.servicos.push(new Servico('Manicure', 25))
         this.servicos.push(new Servico('Pedicure', 30))
     }

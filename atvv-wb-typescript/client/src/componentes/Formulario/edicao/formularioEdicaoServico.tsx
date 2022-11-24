@@ -13,8 +13,6 @@ export default class FormularioEdicaoServico extends Component<props> {
 
     constructor(props: props | Readonly<props>) {
         super(props);
-        this.nome = this.props.servico.nome
-        this.preco = this.props.servico.preco
 
         this.onClickNome = this.onClickNome.bind(this)
         this.onClickPreco = this.onClickPreco.bind(this)
@@ -24,7 +22,23 @@ export default class FormularioEdicaoServico extends Component<props> {
     componentDidMount(): void {
         var elems = document.querySelectorAll('select');
         M.FormSelect.init(elems);
+        this.load()
     }
+
+    componentDidUpdate(prevProps: Readonly<props>, prevState: Readonly<any>, snapshot?: any): void {
+        if(this.props != prevProps){
+            this.load()
+        }
+    }
+
+    load(): void {
+        this.setState({
+            nome: this.props.servico.nome
+        })
+        this.nome = this.props.servico.nome
+        this.preco = this.props.servico.preco
+    }
+
 
     async cadastro(): Promise<boolean> {
         let retorno = false
@@ -94,13 +108,13 @@ export default class FormularioEdicaoServico extends Component<props> {
                         <form className="col s12">
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input defaultValue={this.props.servico.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate" />
+                                    <input defaultValue={this.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate" />
                                     <label htmlFor="first_name" className="active">Nome</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input defaultValue={this.props.servico.preco} id="preco" onChange={this.onClickPreco} type="number" className="validate" />
+                                    <input defaultValue={this.preco} id="preco" onChange={this.onClickPreco} type="number" className="validate" />
                                     <label htmlFor="preco" className="active">Preço</label>
                                 </div>
                             </div>

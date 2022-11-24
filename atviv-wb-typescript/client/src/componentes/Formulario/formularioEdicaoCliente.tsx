@@ -8,26 +8,36 @@ type props = {
     cliente: Cliente
 }
 
-type tel = {
-    ddd: string
-    numero: string
+type state = {
+    nome: string
 }
 
 export default class FormularioEdicaoCliente extends Component<props> {
 
-    private nome
-    private sobrenome
-    private email
-    private telefone: Telefone
-    private endereco: Endereco
+
+    nome!: string
+    sobrenome!: string
+    email!: string
+    telefoneDDD!: string
+    telefoneNumero!: string
+    enderecoRua!: string
+    enderecoNumero!: string
+    enderecoBairro!: string
+    enderecoCEP!: string
+    enderecoCidade!: string
+    enderecoEstado!: string
+    enderecoComplemento!: string
 
     constructor(props: props | Readonly<props>) {
         super(props);
-        this.nome = this.props.cliente.nome
-        this.sobrenome = this.props.cliente.sobreNome
-        this.email = this.props.cliente.email
-        this.telefone = this.props.cliente.telefones[this.props.cliente.telefones.length - 1]
-        this.endereco = this.props.cliente.endereco
+        this.state = {
+            nome: this.props.cliente.nome
+        }
+        // this.nome = this.props.cliente.nome
+        // this.sobrenome = this.props.cliente.sobreNome
+        // this.email = this.props.cliente.email
+        // this.telefone = this.props.cliente.telefones[this.props.cliente.telefones.length - 1]
+        // this.endereco = this.props.cliente.endereco
 
         this.onClickEmail = this.onClickEmail.bind(this)
         this.onClickEnderecoBairro = this.onClickEnderecoBairro.bind(this)
@@ -47,21 +57,48 @@ export default class FormularioEdicaoCliente extends Component<props> {
     componentDidMount(): void {
         var elems = document.querySelectorAll('select');
         M.FormSelect.init(elems);
+        this.load()
+    }
+
+    componentDidUpdate(prevProps: Readonly<props>, prevState: Readonly<any>, snapshot?: any): void {
+        if(this.props != prevProps){
+            this.load()
+        }
+    }
+
+    load(): void {
+        this.setState({
+            nome: this.props.cliente.nome
+        })
+        this.nome = this.props.cliente.nome
+        this.sobrenome = this.props.cliente.sobreNome
+        this.email = this.props.cliente.email
+        this.telefoneDDD = this.props.cliente.telefones[0].ddd
+        this.telefoneNumero = this.props.cliente.telefones[0].numero
+        this.enderecoRua = this.props.cliente.endereco.rua
+        this.enderecoNumero = this.props.cliente.endereco.numero
+        this.enderecoBairro = this.props.cliente.endereco.bairro
+        this.enderecoCEP = this.props.cliente.endereco.codigoPostal
+        this.enderecoCidade = this.props.cliente.endereco.cidade
+        this.enderecoEstado = this.props.cliente.endereco.estado
+        this.enderecoComplemento = this.props.cliente.endereco.informacoesAdicionais
     }
 
     async cadastro(): Promise<boolean> {
         let retorno = false
+        let endereco = new Endereco(this.enderecoCidade, this.enderecoEstado, this.enderecoRua, this.enderecoBairro,
+            this.enderecoNumero, this.enderecoComplemento, this.enderecoCEP)
         let mapeado = {
             id: this.props.cliente.id,
             nome: this.nome,
             sobreNome: this.sobrenome,
             email: this.email,
-            endereco: this.endereco,
+            endereco: endereco,
             telefones: Array<Telefone>()
         }
         let tel = new Telefone()
-        tel.ddd = this.telefone.ddd
-        tel.numero = this.telefone.numero
+        tel.ddd = this.telefoneDDD
+        tel.numero = this.telefoneNumero
         mapeado.telefones.push(tel)
         console.log(mapeado)
         await fetch("http://localhost:32832/cliente/atualizar", {
@@ -77,7 +114,9 @@ export default class FormularioEdicaoCliente extends Component<props> {
     }
 
     async onSubmit() {
-        if (!this.nome || !this.sobrenome || !this.email || !this.telefone.ddd || !this.telefone.numero || !this.endereco.rua || !this.endereco.numero || !this.endereco.bairro || !this.endereco.cidade || !this.endereco.estado || !this.endereco.codigoPostal || !this.endereco.informacoesAdicionais) {
+        if (!this.nome || !this.sobrenome || !this.email || !this.telefoneDDD || !this.telefoneNumero
+             || !this.enderecoRua || !this.enderecoNumero || !this.enderecoBairro || !this.enderecoCidade 
+             || !this.enderecoEstado || !this.enderecoCEP || !this.enderecoComplemento) {
             Swal.fire(
                 'Erro!',
                 'Preencha todos os campos.',
@@ -85,6 +124,45 @@ export default class FormularioEdicaoCliente extends Component<props> {
             )
             return
         }
+
+        if (!this.email.includes("@") || !this.email.includes('.com')) {
+            Swal.fire(
+                'Erro!',
+                'E-mail incorreto.',
+                'error'
+            )
+            return
+        }
+
+        if ((this.telefoneDDD + "").length < 2) {
+            Swal.fire(
+                'Erro!',
+                'DDD inválido.',
+                'error'
+            )
+            return
+        }
+
+        if ((this.telefoneNumero + "").length < 9) {
+            Swal.fire(
+                'Erro!',
+                'Número de telefone inválido.',
+                'error'
+            )
+            return
+        }
+
+        if ((this.enderecoCEP + "").length < 8) {
+            Swal.fire(
+                'Erro!',
+                'CEP inválido.',
+                'error'
+            )
+            return
+        }
+
+        // validações
+
 
         let resposta = await this.cadastro()
         if (resposta) {
@@ -109,43 +187,52 @@ export default class FormularioEdicaoCliente extends Component<props> {
     }
 
     onClickNome(event) {
-        this.nome = event.target.value
+        this.setState({ nome: event.target.value})
     }
     onClickSobreNome(event) {
-        this.sobrenome = event.target.value
+        this.setState({ sobrenome: event.target.value})
     }
     onClickEmail(event) {
-        this.email = event.target.value
+        this.setState({ email: event.target.value})
     }
     onClickTelefoneDDD(event) {
-        this.telefone.ddd = event.target.value
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength)
+        }
+        this.setState({ telefoneDDD: event.target.value})
     }
     onClickTelefoneNumero(event) {
-        this.telefone.numero = event.target.value
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength)
+        }
+        this.setState({ telefoneNumero: event.target.value})
     }
     onClickEnderecoCidade(event) {
-        this.endereco.cidade = event.target.value
+        this.setState({ enderecoCidade: event.target.value})
     }
     onClickEnderecoEstado(event) {
-        this.endereco.estado = event.target.value
+        this.setState({ enderecoCidade: event.target.value})
     }
     onClickEnderecoCEP(event) {
-        this.endereco.codigoPostal = event.target.value
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength)
+        }
+        this.setState({ enderecoCEP: event.target.value})
     }
     onClickEnderecoRua(event) {
-        this.endereco.rua = event.target.value
+        this.setState({ enderecoRua: event.target.value})
     }
     onClickEnderecoNumero(event) {
-        this.endereco.numero = event.target.value
+        this.setState({ enderecoNumero: event.target.value})
     }
     onClickEnderecoComplemento(event) {
-        this.endereco.informacoesAdicionais = event.target.value
+        this.setState({ enderecoComplemento: event.target.value})
     }
     onClickEnderecoBairro(event) {
-        this.endereco.bairro = event.target.value
+        this.setState({ enderecoBairro: event.target.value})
     }
 
-    render() {
+    render() {        
         return (
             <>
                 <div className="modal-content">
@@ -154,66 +241,69 @@ export default class FormularioEdicaoCliente extends Component<props> {
                         <form className="col s12">
                             <div id="modalLine" className="row">
                                 <div className="input-field col s7">
-                                    <input defaultValue={this.props.cliente.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate" />
+                                    <input defaultValue={this.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate"/>
                                     <label htmlFor="first_name" className="active">nome</label>
                                 </div>
                                 <div className="input-field col s5">
-                                    <input defaultValue={this.props.cliente.sobreNome} id="last_name" onChange={this.onClickSobreNome} type="text" className="validate" />
+                                    <input defaultValue={this.sobrenome} id="last_name" onChange={this.onClickSobreNome} type="text" />
                                     <label htmlFor="last_name" className="active">sobrenome</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.email} id="email" onChange={this.onClickEmail} type="email" className="validate" />
+                                    <input defaultValue={this.email} id="email" onChange={this.onClickEmail} type="text" />
                                     <label htmlFor="email" className="active">E-mail</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s2">
-                                    <input defaultValue={this.props.cliente.telefones[0].ddd} id="ddd" onChange={this.onClickTelefoneDDD} type="text" className="validate" />
+                                    <input defaultValue={this.telefoneDDD} id="ddd" onChange={this.onClickTelefoneDDD} type="number" maxLength={2} />
                                     <label htmlFor="ddd" className="active">DDD</label>
                                 </div>
                                 <div className="input-field col s4">
-                                    <input defaultValue={this.props.cliente.telefones[0].numero} id="number" onChange={this.onClickTelefoneNumero} type="text" className="validate" />
+                                    <input defaultValue={this.telefoneNumero} id="number" onChange={this.onClickTelefoneNumero} type="number" maxLength={9} />
                                     <label htmlFor="number" className="active">Número</label>
                                 </div>
                             </div>
                             <h6>Endereço</h6>
                             <div id="modalLine" className="row">
-                                <div className="input-field col s7">
-                                    <input defaultValue={this.props.cliente.endereco.cidade} id="cidade" onChange={this.onClickEnderecoCidade} type="text" className="validate" />
+                                <div className="input-field col s5">
+                                    <input defaultValue={this.enderecoCidade} id="cidade" onChange={this.onClickEnderecoCidade} type="text" />
                                     <label htmlFor="cidade" className="active">Cidade</label>
                                 </div>
-                                <div className="input-field col s2">
-                                    <input defaultValue={this.props.cliente.endereco.estado} id="estado" onChange={this.onClickEnderecoEstado} type="text" className="validate" />
+                                <div className="input-field col s4">
+                                    <input defaultValue={this.enderecoEstado} id="estado" onChange={this.onClickEnderecoEstado} type="text" />
                                     <label htmlFor="estado" className="active">Estado</label>
                                 </div>
                                 <div className="input-field col s3">
-                                    <input defaultValue={this.props.cliente.endereco.codigoPostal} id="cep" onChange={this.onClickEnderecoCEP} type="text" className="validate" />
+                                    <input defaultValue={this.enderecoCEP} id="cep" onChange={this.onClickEnderecoCEP} type="number" maxLength={8} />
                                     <label htmlFor="cep" className="active">CEP</label>
+                                    <span className="helper-text">Somente números</span>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
-                                <div className="input-field col s11">
-                                    <input defaultValue={this.props.cliente.endereco.rua} id="rua" type="text" onChange={this.onClickEnderecoRua} className="validate" />
+                                <div className="input-field col s9">
+                                    <input defaultValue={this.enderecoRua} id="rua" type="text" onChange={this.onClickEnderecoRua} />
                                     <label htmlFor="rua" className="active">Rua</label>
                                 </div>
-                                <div className="input-field col s1">
-                                    <input defaultValue={this.props.cliente.endereco.numero} id="numero" onChange={this.onClickEnderecoNumero} type="text" className="validate" />
+                                <div className="input-field col s3">
+                                    <input defaultValue={this.enderecoNumero} id="numero" onChange={this.onClickEnderecoNumero} type="number" />
                                     <label htmlFor="numero" className="active">Nº</label>
                                 </div>
 
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s4">
-                                    <input defaultValue={this.props.cliente.endereco.bairro} id="bairro" type="text" onChange={this.onClickEnderecoBairro} className="validate" />
+                                    <input defaultValue={this.enderecoBairro} id="bairro" type="text" onChange={this.onClickEnderecoBairro} />
                                     <label htmlFor="bairro" className="active">Bairro</label>
                                 </div>
                             </div>
                             <h6>Informações adicionais</h6>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.endereco.informacoesAdicionais} id="complemento" onChange={this.onClickEnderecoComplemento} type="text" className="validate" />
+                                        {/* <input defaultValue={this.props.cliente.endereco.informacoesAdicionais} id="complemento" onChange={this.onClickEnderecoComplemento} type="text" />
+                                        <label htmlFor="complemento" className="active">Informações</label> */}
+                                    <textarea defaultValue={this.enderecoComplemento} id="complemento" className="materialize-textarea" onChange={this.onClickEnderecoComplemento} ></textarea>
                                     <label htmlFor="complemento" className="active">Informações</label>
                                 </div>
                             </div>

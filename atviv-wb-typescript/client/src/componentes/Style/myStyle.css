@@ -1,15 +1,15 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-body{
+body {
     background-color: #fce4ec;
     height: 100%;
 }
@@ -72,7 +72,7 @@ a:hover {
     padding: 2rem;
 }
 
-.hidden{
+.hidden {
     display: none
 }
 

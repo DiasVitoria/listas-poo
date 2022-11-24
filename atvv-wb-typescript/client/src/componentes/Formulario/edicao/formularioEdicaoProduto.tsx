@@ -6,7 +6,11 @@ type props = {
     produto: Produto
 }
 
-export default class FormularioEdicaoProduto extends Component<props> {
+type state = {
+    nome: string
+}
+
+export default class FormularioEdicaoProduto extends Component<props, state> {
 
     private nome
     private preco
@@ -14,9 +18,9 @@ export default class FormularioEdicaoProduto extends Component<props> {
 
     constructor(props: props | Readonly<props>) {
         super(props);
-        this.nome = this.props.produto.nome
-        this.preco = this.props.produto.preco
-        this.estoque = this.props.produto.estoque
+        this.state = {
+            nome: ''
+        }
 
         this.onClickNome = this.onClickNome.bind(this)
         this.onClickPreco = this.onClickPreco.bind(this)
@@ -27,6 +31,23 @@ export default class FormularioEdicaoProduto extends Component<props> {
     componentDidMount(): void {
         var elems = document.querySelectorAll('select');
         M.FormSelect.init(elems);
+        this.load()
+    }
+
+    componentDidUpdate(prevProps: Readonly<props>, prevState: Readonly<state>, snapshot?: any): void {
+        if(this.props != prevProps){
+            this.load()
+        }
+    }
+
+    load(): void {
+        console.log(this.props)
+        this.setState({
+            nome: this.props.produto.nome
+        })
+        this.nome = this.props.produto.nome
+        this.preco = this.props.produto.preco
+        this.estoque = this.props.produto.estoque
     }
 
     async cadastro(): Promise<boolean> {
@@ -102,19 +123,17 @@ export default class FormularioEdicaoProduto extends Component<props> {
                         <form className="col s12">
                             <div id="modalLine" className="row">
                                 <div className="input-field col s12">
-                                    <input defaultValue={this.props.produto.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate" />
+                                    <input defaultValue={this.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate" />
                                     <label htmlFor="first_name" className="active">Nome</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.produto.preco} id="preco" onChange={this.onClickPreco} type="number" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.preco} id="preco" onChange={this.onClickPreco} type="number" className="validate" />
                                     <label htmlFor="preco" className="active">Preço</label>
                                 </div>
-                            </div>
-                            <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.produto.estoque} id="estoque" onChange={this.onClickEstoque} type="number" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.estoque} id="estoque" onChange={this.onClickEstoque} type="number" className="validate" />
                                     <label htmlFor="estoque" className="active">Estoque</label>
                                 </div>
                             </div>

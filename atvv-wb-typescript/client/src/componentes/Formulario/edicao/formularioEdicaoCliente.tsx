@@ -6,7 +6,11 @@ type props = {
     cliente: Cliente
 }
 
-export default class FormularioEdicaoCliente extends Component<props> {
+type state = {
+    nome: string
+}
+
+export default class FormularioEdicaoCliente extends Component<props, state> {
 
     private nome
     private nomeSocial
@@ -16,11 +20,15 @@ export default class FormularioEdicaoCliente extends Component<props> {
 
     constructor(props: props | Readonly<props>) {
         super(props);
-        this.nome = this.props.cliente.nome
-        this.cpf = this.props.cliente.cpf
-        this.nomeSocial = this.props.cliente.nomeSocial
-        this.telefone = this.props.cliente.telefone
-        this.email = this.props.cliente.email
+        this.state = {
+            nome: this.props.cliente.nome
+        }
+        
+        // this.nome = this.props.cliente.nome
+        // this.cpf = this.props.cliente.cpf
+        // this.nomeSocial = this.props.cliente.nomeSocial
+        // this.telefone = this.props.cliente.telefone
+        // this.email = this.props.cliente.email
 
         this.onClickNome = this.onClickNome.bind(this)
         this.onClickNomeSocial = this.onClickNomeSocial.bind(this)
@@ -33,6 +41,26 @@ export default class FormularioEdicaoCliente extends Component<props> {
     componentDidMount(): void {
         var elems = document.querySelectorAll('select');
         M.FormSelect.init(elems);
+        this.load()
+    }
+
+    
+
+    componentDidUpdate(prevProps: Readonly<props>, prevState: Readonly<state>, snapshot?: any): void {
+        if(this.props != prevProps){
+            this.load()
+        }
+    }
+
+    load(): void {
+        this.setState({
+            nome: this.props.cliente.nome
+        })
+        this.nome = this.props.cliente.nome
+        this.cpf = this.props.cliente.cpf
+        this.nomeSocial = this.props.cliente.nomeSocial
+        this.telefone = this.props.cliente.telefone
+        this.email = this.props.cliente.email
     }
 
     async cadastro(): Promise<boolean> {
@@ -107,9 +135,11 @@ export default class FormularioEdicaoCliente extends Component<props> {
 
     onClickEmail(event){
         this.email = event.target.value
+        console.log('mudou o email')
     }
 
     render() {
+        
         return (
             <>
                 <div className="modal-content">
@@ -117,32 +147,28 @@ export default class FormularioEdicaoCliente extends Component<props> {
                     <div className="row">
                         <form className="col s12">
                             <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.nome} onChange={this.onClickNome} id="first_name" type="text" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.nome} onChange={this.onClickNome} id="first_name" type="text" />
                                     <label htmlFor="first_name" className="active">nome</label>
                                 </div>
-                            </div>
-                            <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.nomeSocial} id="nomeSocial" onChange={this.onClickNomeSocial} type="text" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.nomeSocial} id="nomeSocial" onChange={this.onClickNomeSocial} type="text" />
                                     <label htmlFor="nomeSocial" className="active">Nome Social</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.cpf} id="cpf" onChange={this.onClickCpf} type="text" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.cpf} id="cpf" onChange={this.onClickCpf} type="text" />
                                     <label htmlFor="cpf" className="active">CPF</label>
                                 </div>
-                            </div>
-                            <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.email} id="email" onChange={this.onClickEmail} type="email" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.email} id="email" onChange={this.onClickEmail} type="email"/>
                                     <label htmlFor="email" className="active">Email</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
-                                <div className="input-field col s12">
-                                    <input defaultValue={this.props.cliente.telefone} id="telefone" onChange={this.onClickTelefone} type="text" className="validate" />
+                                <div className="input-field col s6">
+                                    <input defaultValue={this.telefone} id="telefone" onChange={this.onClickTelefone} type="text" />
                                     <label htmlFor="telefone" className="active">Telefone</label>
                                 </div>
                             </div>

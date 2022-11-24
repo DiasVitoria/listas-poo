@@ -103,13 +103,11 @@ export default class FormularioCadastroProduto extends Component<props> {
                             </div>
                         </div>
                         <div id="modalLine" className="row">
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input id="preco" type="number" onChange={this.onClickPreco} className="validate" />
                                 <label htmlFor="preco">Preço</label>
                             </div>
-                        </div>
-                        <div id="modalLine" className="row">
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input id="estoque" type="number" onChange={this.onClickEstoque} className="validate" />
                                 <label htmlFor="estoque">Estoque</label>
                             </div>

@@ -118,23 +118,21 @@ export default class FormularioCadastroCliente extends Component<props> {
                 <div className="row">
                     <form className="col s12">
                         <div id="modalLine" className="row">
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input id="nome" type="text" onChange={this.onClickNome} className="validate" />
                                 <label htmlFor="nome">Nome</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input id="nomeSocial" type="text" onChange={this.onClickNomeSocial} className="validate" />
                                 <label htmlFor="nomeSocial">Nome Social</label>
                             </div>
                         </div>
                         <div id="modalLine" className="row">
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input id="cpf" type="text" onChange={this.onClickCpf} className="validate" />
                                 <label htmlFor="cpf">CPF</label>
                             </div>
-                        </div>
-                        <div id="modalLine" className="row">
-                            <div className="input-field col s5">
+                            <div className="input-field col s6">
                                 <select onChange={this.onClickGenero}>
                                     <option value="">Escolha uma opção</option>
                                     <option value="Feminino">Feminino</option>
@@ -145,13 +143,11 @@ export default class FormularioCadastroCliente extends Component<props> {
                             </div>
                         </div>
                         <div id="modalLine" className="row">
-                            <div className="input-field col s12">
+                            <div className="input-field col s8">
                                 <input id="email" type="email" onChange={this.onClickEmail} className="validate" />
                                 <label htmlFor="email">Email</label>
                             </div>
-                        </div>
-                        <div id="modalLine" className="row">
-                            <div className="input-field col s12">
+                            <div className="input-field col s4">
                                 <input id="telefone" type="text" onChange={this.onClickTelefone} className="validate" />
                                 <label htmlFor="telefone">Telefone</label>
                             </div>
