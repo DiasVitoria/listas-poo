@@ -5,20 +5,34 @@ import { Component } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css'
 import '../../Style/myStyle.css'
+import Cliente from "../../../Models/cliente";
 
 
 type props = {
-    tema: string;
-};
+    tema: string
+    cliente: Cliente
+}
 
-export default class HistoricoThales extends Component<props> {
+type state = {
+    consumoProduto: any[]
+    consumoServico: any[]
+}
+
+export default class HistoricoThales extends Component<props, state> {
+
+    constructor(props: props | Readonly<props>) {
+        super(props);
+        this.state = {
+            consumoProduto: [],
+            consumoServico: []
+        }
+    }
 
     componentDidMount() {
-        var elems = document.querySelectorAll('.collapsible');
-        M.Collapsible.init(elems);
-
         var elemsModal = document.querySelectorAll('.modal');
         M.Modal.init(elemsModal);
+
+        // FAZER REQUISIÇÃO GET DO CLIENTEPRODUTO E CLIENTESERVIÇO
     }
 
     render() {

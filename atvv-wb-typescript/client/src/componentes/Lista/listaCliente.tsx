@@ -144,6 +144,8 @@ export default class ListaCliente extends Component<prop, state> {
                     <div id="editDeleteButtonContainer">
                       <button id="editDeleteButton" data-target="modalEdit" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></button>
                       <button id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></button>
+                      <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">monetization_on</i></a>
+                      <a href="#modalHistory" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">access_time</i></a>
                     </div>
                   </div>
                 </li>
@@ -163,6 +165,12 @@ export default class ListaCliente extends Component<prop, state> {
         </div>
         <div id="modalEdit" className="modal modal-fixed-footer">
           {this.state.clienteSelected?.id && <FormularioEdicaoCliente cliente={this.state.clienteSelected} />}
+        </div>
+        <div id="modalSell" className="modal modal-fixed-footer">
+          
+        </div>
+        <div id="modalHistory" className="modal modal-fixed-footer">
+          
         </div>
       </div >
     );
