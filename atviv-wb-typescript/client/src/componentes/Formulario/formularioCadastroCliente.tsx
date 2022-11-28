@@ -65,50 +65,59 @@ export default class FormularioCadastroCliente extends Component<props> {
     async onSubmit() {
 
 
-        if (!this.nome || !this.sobrenome || !this.email || !this.telefone.ddd || !this.telefone.numero || !this.endereco.rua || !this.endereco.numero || !this.endereco.bairro || !this.endereco.cidade || !this.endereco.estado || !this.endereco.codigoPostal || !this.endereco.informacoesAdicionais) {
-            Swal.fire(
-                'Erro!',
-                'Preencha todos os campos.',
-                'error'
-            )
-            return
-        }
+        if (
+            !this.nome ||
+            !this.sobrenome ||
+            !this.email ||
+            !this.telefone.ddd ||
+            !this.telefone.numero ||
+            !this.endereco.rua ||
+            !this.endereco.numero ||
+            !this.endereco.bairro ||
+            !this.endereco.cidade ||
+            !this.endereco.estado ||
+            !this.endereco.codigoPostal ||
+            !this.endereco.informacoesAdicionais
+          ) {
+            Swal.fire("Erro!", "Preencha todos os campos.", "error");
+            return;
+          }
 
-        if (!this.email.includes("@") || !this.email.includes('.com')) {
-            Swal.fire(
-                'Erro!',
-                'E-mail incorreto.',
-                'error'
-            )
-            return
-        }
+          if (!this.email.includes("@") || !this.email.includes(".com")) {
+            Swal.fire({
+              icon: "error",
+              title: "E-mail inválido",
+              text: "E-mail deve conter '@' e '.com'",
+            });
+            return;
+          }
 
         if ((this.telefone.ddd + "").length < 2) {
-            Swal.fire(
-                'Erro!',
-                'DDD inválido.',
-                'error'
-            )
-            return
-        }
+            Swal.fire({
+              icon: "error",
+              title: "DDD inválido.",
+              text: "DDD deve conter apenas 2 dígitos",
+            });
+            return;
+          }
 
         if ((this.telefone.numero + "").length < 9) {
-            Swal.fire(
-                'Erro!',
-                'Número de telefone inválido.',
-                'error'
-            )
-            return
-        }
+            Swal.fire({
+              icon: "error",
+              title: "Número de telefone inválido.",
+            });
+            return;
+          }
+      
 
         if ((this.endereco.codigoPostal + "").length < 8) {
-            Swal.fire(
-                'Erro!',
-                'CEP inválido.',
-                'error'
-            )
-            return
-        }
+            Swal.fire({
+              icon: "error",
+              title: "CEP inválido.",
+              text: "CEP deve conter 8 dígitos",
+            });
+            return;
+          }
 
         let resposta = await this.cadastro()
         if (resposta) {
