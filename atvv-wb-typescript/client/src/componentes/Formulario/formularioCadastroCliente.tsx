@@ -137,7 +137,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                                     <option value="">Escolha uma opção</option>
                                     <option value="Feminino">Feminino</option>
                                     <option value="Masculino">Masculino</option>
-                                    <option value="Outro">Outro</option>
+                                    <option value="Outros">Outros</option>
                                 </select>
                                 <label htmlFor="gender">Gênero</label>
                             </div>

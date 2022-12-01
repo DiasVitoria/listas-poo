@@ -7,7 +7,10 @@ import FormularioCadastroCliente from "../Formulario/formularioCadastroCliente";
 import FormularioEdicaoCliente from "../Formulario/edicao/formularioEdicaoCliente";
 import Cliente from "../../Models/cliente";
 import Swal from "sweetalert2";
-import ModalTeste from "../Formulario/edicao/modal";
+import HistoricoCliente from "../Historico/HistoricoCliente/historicoCliente";
+import VendaCliente from "../Vendas/vendaCliente";
+import { deleteCliente, getAllClientes } from "../../controller/clienteController";
+import Venda from "../Vendas/venda";
 
 
 type prop = {
@@ -22,7 +25,7 @@ type state = {
 export default class ListaCliente extends Component<prop, state> {
 
 
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -52,23 +55,23 @@ export default class ListaCliente extends Component<prop, state> {
     });
   }
 
-  onClickEdit(event){
+  onClickEdit(event) {
     let id = event.target.id
     let idNumber = new Number(id).valueOf()
-    let cliente = this.state.clientes.find(item=> item.id == idNumber);
+    let cliente = this.state.clientes.find(item => item.id == idNumber);
     this.setState({
       clienteSelected: cliente
     })
   }
 
   componentDidUpdate(prevProps: Readonly<prop>, prevState: Readonly<state>, snapshot?: any): void {
-    if(prevState.clienteSelected != this.state.clienteSelected){
+    if (prevState.clienteSelected != this.state.clienteSelected) {
       var elemsModal = document.querySelectorAll('.modal');
       M.Modal.init(elemsModal);
     }
   }
 
-  async deleteCliente(id): Promise<boolean>  {
+  async deletarCliente(id): Promise<boolean> {
     let retorno = false
     await fetch("http://localhost:3001/cliente/deletar/" + id, {
       method: "DELETE",
@@ -77,44 +80,44 @@ export default class ListaCliente extends Component<prop, state> {
       }
     }).then(response => {
       retorno = response.status === 200
-    })  
+    })
     return retorno
   }
 
   onClickDelete(event) {
     let id = event.target.id
     Swal.fire({
-        title: 'Deletar cliente',
-        text: "Essa ação não pode ser revertida!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, deletar!'
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-            let deleted = await this.deleteCliente(id)
-            if(deleted){
-                Swal.fire(
-                    'Deletado!',
-                    'Cliente deletado com sucesso.',
-                    'success'
-                    ).then(result => {
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                      window.location.reload()
-                    })
-            }else{
-                Swal.fire(
-                    'Erro!',
-                    'Um erro ocorreu.',
-                    'error'
-                    ).then(result => {
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                      window.location.reload()
-                    })
-            }
+      title: 'Deletar cliente',
+      text: "Essa ação não pode ser revertida!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let deleted = await this.deletarCliente(id)
+        if (deleted) {
+          Swal.fire(
+            'Deletado!',
+            'Cliente deletado com sucesso.',
+            'success'
+          ).then(result => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.location.reload()
+          })
+        } else {
+          Swal.fire(
+            'Erro!',
+            'Um erro ocorreu.',
+            'error'
+          ).then(result => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.location.reload()
+          })
         }
-      })
+      }
+    })
   }
 
   render() {
@@ -157,6 +160,9 @@ export default class ListaCliente extends Component<prop, state> {
         <div id="addButtonContainer">
           <a href="#modalCadastro" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">add</i></a>
         </div>
+        <div id="sellButtonContainer">
+          <a href="#modalSellAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">monetization_on</i></a>
+        </div>
 
         {/* ----------------------------------------------------------------MODAL---------------------------------------------------------------- */}
 
@@ -167,10 +173,13 @@ export default class ListaCliente extends Component<prop, state> {
           {this.state.clienteSelected?.id && <FormularioEdicaoCliente cliente={this.state.clienteSelected} />}
         </div>
         <div id="modalSell" className="modal modal-fixed-footer">
-          
+          {this.state.clienteSelected?.id && <VendaCliente cliente={this.state.clienteSelected} />}
         </div>
         <div id="modalHistory" className="modal modal-fixed-footer">
-          
+          {this.state.clienteSelected?.id && <HistoricoCliente cliente={this.state.clienteSelected} />}
+        </div>
+        <div id="modalSellAll" className="modal modal-fixed-footer">
+            <Venda />
         </div>
       </div >
     );

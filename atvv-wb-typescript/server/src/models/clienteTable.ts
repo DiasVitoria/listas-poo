@@ -37,6 +37,6 @@ const cliente = database.define('cliente', {
     }
 })
 
-cliente.sync({ alter: true });
+// cliente.sync({ alter: true });
 
 module.exports = cliente;

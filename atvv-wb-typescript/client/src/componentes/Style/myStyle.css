@@ -166,3 +166,18 @@ a:hover {
 #vendaModalLine {
     margin: 0;
 }
+
+.hidden {
+    display: none;
+}
+
+.phistorico{
+    width: 90%;
+    background-color: #ff80ab;
+    margin: 10% auto;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fce4ec;
+}

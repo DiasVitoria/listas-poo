@@ -33,9 +33,17 @@ const clienteProduto = database.define('clienteProduto', {
     quantidadeVendida: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    valorCompra: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    generoCliente: {
+      type: Sequelize.STRING,
+      allowNull: false
     }
 })
 
-//clienteProduto.sync({ alter: true });
+clienteProduto.sync({ alter: true });
 
 module.exports = clienteProduto;

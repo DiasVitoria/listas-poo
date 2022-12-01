@@ -10,7 +10,6 @@ import VendaServicoAll from "../Vendas/vendaServicoAll";
 import Swal from "sweetalert2";
 import FormularioEdicaoServico from "../Formulario/edicao/formularioEdicaoServico";
 import Servico from "../../Models/servico";
-import HistoricoServicoAll from "../Historico/HistoricoServico/historicoServicoAll";
 
 type props = {
   tema: string;
@@ -137,9 +136,7 @@ export default class ListaServico extends Component<props, state> {
                       <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></a>
                       <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></a>
                       {/* Colocar para abrir modal de venda */}
-                      <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-                      {/* Colocar para abrir modal de histórico */}
-                      <a href="#modalHistory" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
+                      <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">monetization_on</i></a>
                     </div>
                   </div>
                 </li>
@@ -163,14 +160,6 @@ export default class ListaServico extends Component<props, state> {
             <i className="large material-icons">monetization_on</i>
           </a>
         </div>
-        <div id="historyButtonContainer">
-          <a
-            href="#modalHistoryAll"
-            className="btn-floating btn-large pink accent-2 pulse modal-trigger"
-          >
-            <i className="large material-icons">access_time</i>
-          </a>
-        </div>
 
         <div id="modalCadastro" className="modal modal-fixed-footer">
           <FormularioCadastroServico tema="#ff4081 pink accent-2" />
@@ -181,113 +170,11 @@ export default class ListaServico extends Component<props, state> {
         </div>
 
         <div id="modalSell" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Venda</h5>
-            <VendaServico tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button
-              id="cancelButtonContainer"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="cancelButton" className="material-icons right">
-                  cancel
-                </i>
-              </a>
-              Cancelar
-            </button>
-            <button
-              id="cadastrarButtonContainer"
-              type="submit"
-              name="action"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="sendButton" className="material-icons right">
-                  send
-                </i>
-              </a>
-              Confirmar
-            </button>
-          </div>
+          {this.state.servicoSelected !== undefined ? <VendaServico servico={this.state.servicoSelected} /> : <></>}
         </div>
 
         <div id="modalSellAll" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Venda</h5>
-            <VendaServicoAll tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button
-              id="cancelButtonContainer"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="cancelButton" className="material-icons right">
-                  cancel
-                </i>
-              </a>
-              Cancelar
-            </button>
-            <button
-              id="cadastrarButtonContainer"
-              type="submit"
-              name="action"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="sendButton" className="material-icons right">
-                  send
-                </i>
-              </a>
-              Confirmar
-            </button>
-          </div>
-        </div>
-
-        <div id="modalHistoryAll" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Histórico de Vendas</h5>
-            <HistoricoServicoAll tema="#ff4081 pink accent-2" />
-          </div>
-          <div className="modal-footer">
-            <button
-              id="cadastrarButtonContainer"
-              type="submit"
-              name="action"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="sendButton" className="material-icons right">
-                  check
-                </i>
-              </a>
-              Ok
-            </button>
-          </div>
-        </div>
-
-        <div id="modalHistory" className="modal modal-fixed-footer">
-          <div className="modal-content">
-            <h5>Histórico de Vendas</h5>
-            {/* Colocar histórico de vendas de serviços */}
-          </div>
-          <div className="modal-footer">
-            <button
-              id="cadastrarButtonContainer"
-              type="submit"
-              name="action"
-              className="modal-close waves-effect waves-light btn-flat"
-            >
-              <a href="#!">
-                <i id="sendButton" className="material-icons right">
-                  check
-                </i>
-              </a>
-              Ok
-            </button>
-          </div>
+          <VendaServicoAll />
         </div>
       </div>
     );

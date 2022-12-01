@@ -3,13 +3,8 @@ const Sequelize = require('sequelize');
 
 const database = require('./connect')
 const clienteId = require('./clienteTable')
-const servicoId = require('./servicoTable')
 
- 
-clienteId.belongsToMany(servicoId, { through: 'clienteServico' });
-servicoId.belongsToMany(clienteId, { through: 'clienteServico' });
-
-const clienteServico = database.define('clienteServico', {
+const clienteHistorico = database.define('clienteHistorico', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -23,20 +18,21 @@ const clienteServico = database.define('clienteServico', {
           key: 'id'
         }
       },
-    servicoId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: servicoId, 
-          key: 'id'
-        }
-      },
     quantidadeVendida: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
     valorCompra: {
-      type: Sequelize.INTEGER,
-      allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    nomeItem: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    tipoItem: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     },
     generoCliente: {
       type: Sequelize.STRING,
@@ -44,6 +40,6 @@ const clienteServico = database.define('clienteServico', {
     }
 })
 
-clienteServico.sync({ alter: true });
+ clienteHistorico.sync({ alter: true });
 
-module.exports = clienteServico;
+module.exports = clienteHistorico;

@@ -3,13 +3,31 @@ import { StatusCodes } from 'http-status-codes';
 
 const clienteRoute = Router();
 const cliente = require('../models/clienteTable')
-
+const clienteHistorico = require('../models/clienteHistorico')
+const clienteProduto = require('../models/clienteProdutoTable')
+const clienteServico = require('../models/clienteServico')
 
 
 clienteRoute.get('/cliente', async(req: Request, res: Response, next: NextFunction)=>{
     const airplaneList = await cliente.findAll();
     res.status(StatusCodes.OK).send(airplaneList)
 })
+
+clienteRoute.get('/listarClientesMasculinos', async(req: Request, res: Response, next: NextFunction)=>{
+    const airplaneList = await cliente.findAll({ where: { genero: 'Masculino'}});
+    res.status(StatusCodes.OK).send(airplaneList)
+})
+
+clienteRoute.get('/listarClientesFemininos', async(req: Request, res: Response, next: NextFunction)=>{
+    const airplaneList = await cliente.findAll({ where: { genero: 'Feminino'}});
+    res.status(StatusCodes.OK).send(airplaneList)
+})
+
+clienteRoute.get('/listarClientesOutros', async(req: Request, res: Response, next: NextFunction)=>{
+    const airplaneList = await cliente.findAll({ where: { genero: 'Outros'}});
+    res.status(StatusCodes.OK).send(airplaneList)
+})
+
 
 clienteRoute.get('/cliente/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
     const uuid = req.params.uuid;
@@ -68,6 +86,11 @@ clienteRoute.put('/cliente/modificar/:uuid', async(req: Request<{ uuid: string }
 
 clienteRoute.delete('/cliente/deletar/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
     const uuid = req.params.uuid;
+
+    await clienteHistorico.destroy({ where: {clienteId: uuid}})
+    await clienteProduto.destroy({ where: {clienteId: uuid}})
+    await clienteServico.destroy({ where: {clienteId: uuid}})
+
     await cliente.destroy({
         where: {
             id: uuid

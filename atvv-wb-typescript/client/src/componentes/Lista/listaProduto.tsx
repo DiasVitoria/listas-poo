@@ -138,9 +138,7 @@ export default class ListaProduto extends Component<props, state> {
                                         <a href="#modalEdit" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">create</i></a>
                                         <a href="#" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse"><i id={item.id} onClick={this.onClickDelete} className="small material-icons">delete</i></a>
                                         {/* Colocar para abrir modal de venda */}
-                                        <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">monetization_on</i></a>
-                                        {/* Colocar para abrir modal de histórico */}
-                                        <a href="#modalHistory"  id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i className="small material-icons">access_time</i></a>
+                                        <a href="#modalSell" id="editDeleteButton" className="btn-floating btn-medium pink accent-2 pulse modal-trigger"><i id={item.id} onClick={this.onClickEdit} className="small material-icons">monetization_on</i></a>
                                     </div>
                                 </div>
                                 </li>
@@ -155,10 +153,6 @@ export default class ListaProduto extends Component<props, state> {
                     <a href="#modalSellAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">monetization_on</i></a>
                 </div>
 
-                <div id="historyButtonContainer">
-                    <a href="#modalHistoryAll" className="btn-floating btn-large pink accent-2 pulse modal-trigger"><i className="large material-icons">access_time</i></a>
-                </div>
-
                 {/* ---------------------------------------------------------MODAL--------------------------------------------------------- */}
 
                 <div id="modalCadastro" className="modal modal-fixed-footer">
@@ -170,57 +164,11 @@ export default class ListaProduto extends Component<props, state> {
                 </div>
 
                 <div id="modalSell" className="modal modal-fixed-footer">
-                    <div className="modal-content">
-                        <h5>Venda</h5>
-                        <VendaProduto tema="#ff4081 pink accent-2" />
-                    </div>
-                    <div className="modal-footer">
-                        <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-                            <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-                        </button>
-                        <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-                            <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Confirmar
-                        </button>
-                    </div>
+                    {this.state.produtoSelected !== undefined ? <VendaProduto produto={this.state.produtoSelected} /> : <></>}
                 </div>
 
                 <div id="modalSellAll" className="modal modal-fixed-footer">
-                    <div className="modal-content">
-                        <h5>Venda</h5>
-                        <VendaProdutoAll tema="#ff4081 pink accent-2" />
-                    </div>
-                    <div className="modal-footer">
-                        <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-                            <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-                        </button>
-                        <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-                            <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Confirmar
-                        </button>
-                    </div>
-                </div>
-
-                <div id="modalHistoryAll" className="modal modal-fixed-footer">
-                    <div className="modal-content">
-                        <h5>Histórico de Vendas</h5>
-                        <HistoricoProdutoAll tema="#ff4081 pink accent-2" />
-                    </div>
-                    <div className="modal-footer">
-                        <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-                            <a href="#!"><i id="sendButton" className="material-icons right">check</i></a>Ok
-                        </button>
-                    </div>
-                </div>
-
-                <div id="modalHistory" className="modal modal-fixed-footer">
-                    <div className="modal-content">
-                        <h5>Histórico de Vendas</h5>
-                        {/* Colocar modal de histórico */}
-                    </div>
-                    <div className="modal-footer">
-                        <button id="cadastrarButtonContainer" type="submit" name="action" className="modal-close waves-effect waves-light btn-flat">
-                            <a href="#!"><i id="sendButton" className="material-icons right">check</i></a>Ok
-                        </button>
-                    </div>
+                        <VendaProdutoAll  />
                 </div>
             </div>
         )

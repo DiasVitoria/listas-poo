@@ -7,12 +7,6 @@ import { Sequelize } from 'sequelize'
       port: 3306
    })
 
-
-// const connection = new Sequelize("embraer", "root", "fatecsjc", {
-//     host: 'localhost',
-//     dialect: 'mysql'
-//  })
-
 connection.authenticate()
 .then(function(){
     console.log("Conexão com banco de dados realizada com sucesso!");

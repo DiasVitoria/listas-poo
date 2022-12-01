@@ -21,11 +21,7 @@ clienteProdutoRoute.get('/clienteProduto/:uuid', async(req: Request<{ uuid: stri
             message: "Relação não encontrada!"
         })
     } else {
-        let arrayFlap:any =  []
-        project.forEach(flap => {
-            arrayFlap.push(flap.flapId)
-        });
-        return res.json(arrayFlap)
+        return res.json(project)
     }
 })
 

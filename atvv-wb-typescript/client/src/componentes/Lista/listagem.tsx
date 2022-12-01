@@ -4,14 +4,19 @@ import { Component } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css'
 import '../Style/myStyle.css'
+import Urls from "../../controller/urls";
 
+const URL = new Urls()
 
 type props = {
     tema: string
 }
 
 type state = {
-    nome: string;
+    nome: string
+    masculinos: any[]
+    femininos: any[]
+    outros: any[]
 }
 
 export default class Listagem extends Component<props, state> {
@@ -19,7 +24,10 @@ export default class Listagem extends Component<props, state> {
     constructor(props) {
         super(props);
         this.state = {
-            nome: ''
+            nome: '',
+            masculinos: [],
+            femininos: [],
+            outros: []
         }
     }
 
@@ -30,6 +38,38 @@ export default class Listagem extends Component<props, state> {
         var elemsModal = document.querySelectorAll('.modal');
         M.Modal.init(elemsModal);
 
+        fetch(URL.CLIENTES_MASCULINO, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json()).then(r => {
+            this.setState({
+                masculinos: r
+            })
+        });
+
+        fetch(URL.CLIENTES_FEMININO, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json()).then(r => {
+            this.setState({
+                femininos: r
+            })
+        });
+
+        fetch(URL.CLIENTES_OUTROS, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json()).then(r => {
+            this.setState({
+                outros: r
+            })
+        });
     }
 
     render() {
@@ -55,14 +95,33 @@ export default class Listagem extends Component<props, state> {
                             </div>
                             <div id="collapsibleBody" className="collapsible-body">
                                 <h6>Feminino</h6>
-                                <hr />
-                                <span>1º - Vitoria</span><br />
+                                <br />
+                                {this.state.femininos.map(item => {
+                                    let indice = this.state.femininos.indexOf(item) + 1
+                                    return (
+                                        <span>{indice}º - {item.nome}</span>
+                                    )
+                                })}
+                                <br />
+                                <br />
                                 <h6>Masculino</h6>
-                                <hr />
-                                <span>1º - Thales</span><br />
-                                <h6>Outro</h6>
-                                <hr />
-                                <span>1º - Francisco</span><br />
+                                <br />
+                                {this.state.masculinos.map(item => {
+                                    let indice = this.state.masculinos.indexOf(item) + 1
+                                    return (
+                                        <span>{indice}º - {item.nome}</span>
+                                    )
+                                })}
+                                <br />
+                                <br />
+                                <h6>Outros</h6>
+                                <br />
+                                {this.state.outros.map(item => {
+                                    let indice = this.state.outros.indexOf(item) + 1
+                                    return (
+                                        <span>{indice}º - {item.nome}</span>
+                                    )
+                                })}
 
 
                             </div>
