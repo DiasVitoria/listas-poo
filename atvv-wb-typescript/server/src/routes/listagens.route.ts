@@ -2,12 +2,11 @@ import { Router, Request, Response, NextFunction } from "express";
 import { StatusCodes } from 'http-status-codes';
 
 const listagemRoute = Router();
+const cliente = require("../models/clienteTable")
 const clienteProduto = require('../models/clienteProdutoTable')
 const clienteServico = require('../models/clienteServico')
-const clienteHistorico = require('../models/clienteHistorico')
 
-
-listagemRoute.get("/produto/maisConsumidos", async (req, res)=>{
+listagemRoute.get("/listagem/produtosMaisConsumidosQuantidade", async (req, res)=>{
     const { count, rows } = await clienteProduto.findAndCountAll({
         group: "produtoId",
         })

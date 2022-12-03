@@ -5,7 +5,6 @@ import clienteRoute from './routes/cliente.route';
 import produtoRoute from './routes/produto.route';
 import clienteProdutoRoute from './routes/clienteProduto.route';
 import clienteServicoRoute from './routes/clienteServico.route';
-import clienteHistoricoRoute from './routes/clienteHistorico.route';
 import listagemRoute from './routes/listagens.route';
 import cors from 'cors';
 const connection = require('./models/connect')
@@ -27,7 +26,6 @@ app.use(clienteServicoRoute)
 app.use(produtoRoute)
 app.use(clienteProdutoRoute)
 app.use(statusRouter)
-app.use(clienteHistoricoRoute)
 app.use(listagemRoute)
 
 // inicialização do server

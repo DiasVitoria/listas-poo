@@ -83,7 +83,6 @@ export default class VendaServico extends Component<props, state> {
             valorCompra: this.quantidade * preco
         }
 
-        console.log(mapeado)
         await fetch("http://localhost:3001/clienteServico/cadastrar", {
             method: "POST",
             headers: {
@@ -154,7 +153,7 @@ export default class VendaServico extends Component<props, state> {
                             <h6>Quantidade</h6>
                             <div id="vendaModalLine" className="row">
                                 <div className={"input-field col s12"}>
-                                    <input onChange={this.changeQuantidade} id="quantidade" type="text" className="validate" />
+                                    <input onChange={this.changeQuantidade} id="quantidade" type="number" className="validate" />
                                     <label htmlFor="quantidade">Quantidade</label>
                                 </div>
                             </div>

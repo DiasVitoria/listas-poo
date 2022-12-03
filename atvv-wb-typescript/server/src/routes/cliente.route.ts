@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 
 const clienteRoute = Router();
 const cliente = require('../models/clienteTable')
-const clienteHistorico = require('../models/clienteHistorico')
 const clienteProduto = require('../models/clienteProdutoTable')
 const clienteServico = require('../models/clienteServico')
 
@@ -87,7 +86,6 @@ clienteRoute.put('/cliente/modificar/:uuid', async(req: Request<{ uuid: string }
 clienteRoute.delete('/cliente/deletar/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
     const uuid = req.params.uuid;
 
-    await clienteHistorico.destroy({ where: {clienteId: uuid}})
     await clienteProduto.destroy({ where: {clienteId: uuid}})
     await clienteServico.destroy({ where: {clienteId: uuid}})
 

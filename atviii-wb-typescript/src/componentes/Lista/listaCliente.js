@@ -13,20 +13,20 @@ import HistoricoThales from "../Historico/HistoricoCliente/historicoThales";
 import HistoricoVitoria from "../Historico/HistoricoCliente/historicoVitoria";
 
 export default function ListaCliente() {
-  const [nome, setNome] = useState("");
+  const [nome, setNome] = useState("Vazio");
 
   let clickThales = () => {
     setNome("Thales");
-    console.log(setNome);
+    console.log(nome);
   };
 
   let clickVitoria = () => {
     setNome("Vitoria");
-    console.log(setNome);
+    console.log(nome);
   };
 
   let clickVazio = () => {
-    setNome("");
+    setNome("Vazio");
   };
 
   useEffect(() => {
@@ -430,7 +430,7 @@ export default function ListaCliente() {
       <div id="modalHistory" className="modal modal-fixed-footer">
         <div className="modal-content">
           <h5>Histórico de Vendas</h5>
-          {historico()}
+          {nome != null ? historico() : <></>}
         </div>
         <div className="modal-footer">
           <button

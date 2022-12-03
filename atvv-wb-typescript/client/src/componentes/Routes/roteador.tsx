@@ -14,14 +14,13 @@ export default class Roteador extends Component<{}, state> {
     constructor(props: {} | Readonly<{}>) {
         super(props)
         this.state = {
-            tela: 'Clientes'
+            tela: 'Home'
         }
         this.selecionarView = this.selecionarView.bind(this)
     }
 
     selecionarView(novaTela: string, evento: Event) {
         evento.preventDefault()
-        console.log(novaTela);
         this.setState({
             tela: novaTela
         })

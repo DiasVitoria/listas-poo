@@ -94,9 +94,15 @@ export default class HistoricoCliente extends Component<props, state> {
                 valor += produto.preco * element.quantidadeVendida
             });
 
+            let has = false
+            if(r.length > 0){
+                has = true
+            }
+
             this.setState({
                 consumoProduto: r,
-                totalProdutos: valor
+                totalProdutos: valor,
+                temHistorico: has
             })
         });
 
@@ -113,17 +119,18 @@ export default class HistoricoCliente extends Component<props, state> {
                 valor += servico.preco * element.quantidadeVendida
             });
 
+            let has = false
+            if(r.length > 0){
+                has = true
+            }
+
             this.setState({
                 consumoServico: r,
-                totalServicos: valor
+                totalServicos: valor,
+                temHistorico: has
             })
         });
 
-        if (this.state.consumoProduto.length > 0 || this.state.consumoServico.length > 0) {
-            this.setState({
-                temHistorico: true
-            })
-        }
     }
 
     render() {
@@ -142,7 +149,7 @@ export default class HistoricoCliente extends Component<props, state> {
                                             let data = new Date(item.createdAt)
                                             return (
                                                 <>
-                                                    <span>{data.toLocaleString()} - {item.quantidadeVendida}x {produto.nome}</span><br />
+                                                    <span key={item.id}>{data.toLocaleString()} - {item.quantidadeVendida}x {produto.nome}</span><br />
                                                 </>
                                             )
                                         })}
@@ -159,7 +166,7 @@ export default class HistoricoCliente extends Component<props, state> {
                                             let data = new Date(item.createdAt)
                                             return (
                                                 <>
-                                                    <span>{data.toLocaleString()} - {item.quantidadeVendida}x {servico.nome}</span><br />
+                                                    <span key={item.id}>{data.toLocaleString()} - {item.quantidadeVendida}x {servico.nome}</span><br />
                                                 </>
                                             )
                                         })}

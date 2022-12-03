@@ -13,19 +13,7 @@ type state = {
 };
 
 export default class FormularioEdicaoCliente extends Component<props, state> {
-  // nome!: string
-  // sobrenome!: string
-  // email!: string
-  // telefoneDDD!: string
-  // telefoneNumero!: string
-  // enderecoRua!: string
-  // enderecoNumero!: string
-  // enderecoBairro!: string
-  // enderecoCEP!: string
-  // enderecoCidade!: string
-  // enderecoEstado!: string
-  // enderecoComplemento!: string
-
+ 
   private nome;
   private sobrenome;
   private email;
@@ -44,11 +32,6 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
     this.state = {
       nome: this.props.cliente.nome,
     };
-    // this.nome = this.props.cliente.nome
-    // this.sobrenome = this.props.cliente.sobreNome
-    // this.email = this.props.cliente.email
-    // this.telefone = this.props.cliente.telefones[this.props.cliente.telefones.length - 1]
-    // this.endereco = this.props.cliente.endereco
 
     this.onClickEmail = this.onClickEmail.bind(this);
     this.onClickEnderecoBairro = this.onClickEnderecoBairro.bind(this);

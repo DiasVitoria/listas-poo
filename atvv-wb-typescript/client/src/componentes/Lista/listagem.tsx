@@ -17,6 +17,7 @@ type state = {
     masculinos: any[]
     femininos: any[]
     outros: any[]
+    produtosMaisConsumidosQuantidade: any[]
 }
 
 export default class Listagem extends Component<props, state> {
@@ -27,7 +28,8 @@ export default class Listagem extends Component<props, state> {
             nome: '',
             masculinos: [],
             femininos: [],
-            outros: []
+            outros: [],
+            produtosMaisConsumidosQuantidade: []
         }
     }
 
@@ -37,6 +39,17 @@ export default class Listagem extends Component<props, state> {
 
         var elemsModal = document.querySelectorAll('.modal');
         M.Modal.init(elemsModal);
+
+        fetch("http://localhost:3001/listagem/produtosMaisConsumidosQuantidade", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json()).then(r => {
+            this.setState({
+                produtosMaisConsumidosQuantidade: r
+            })
+        });
 
         fetch(URL.CLIENTES_MASCULINO, {
             method: "GET",
@@ -99,7 +112,7 @@ export default class Listagem extends Component<props, state> {
                                 {this.state.femininos.map(item => {
                                     let indice = this.state.femininos.indexOf(item) + 1
                                     return (
-                                        <span>{indice}º - {item.nome}</span>
+                                        <span key={indice}>{indice}º - {item.nome}</span>
                                     )
                                 })}
                                 <br />
@@ -109,7 +122,7 @@ export default class Listagem extends Component<props, state> {
                                 {this.state.masculinos.map(item => {
                                     let indice = this.state.masculinos.indexOf(item) + 1
                                     return (
-                                        <span>{indice}º - {item.nome}</span>
+                                        <span key={indice}>{indice}º - {item.nome}</span>
                                     )
                                 })}
                                 <br />
@@ -119,7 +132,7 @@ export default class Listagem extends Component<props, state> {
                                 {this.state.outros.map(item => {
                                     let indice = this.state.outros.indexOf(item) + 1
                                     return (
-                                        <span>{indice}º - {item.nome}</span>
+                                        <span key={indice}>{indice}º - {item.nome}</span>
                                     )
                                 })}
 
@@ -133,14 +146,12 @@ export default class Listagem extends Component<props, state> {
                             <div id="collapsibleBody" className="collapsible-body">
                                 <span>1º - Shampoo</span><br />
                                 <span>2º - Condicionador</span><br />
-                                <span>3º - Esmalte</span><br />
-                                <span>4º - Corte de Cabelo</span><br />
-                                <span>5º - Manicure e Pedicure</span><br />
                             </div>
                         </li>
                         <li>
                             <div id="collapsibleHeader" className="collapsible-header">
-                                Listagem dos produtos e serviços mais consumidos por gênero                            </div>
+                                Listagem dos produtos e serviços mais consumidos por gênero                            
+                            </div>
                             <div id="collapsibleBody" className="collapsible-body">
                                 <h6>Feminino</h6>
                                 <hr />

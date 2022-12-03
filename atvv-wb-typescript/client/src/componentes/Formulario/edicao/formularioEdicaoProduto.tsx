@@ -41,7 +41,6 @@ export default class FormularioEdicaoProduto extends Component<props, state> {
     }
 
     load(): void {
-        console.log(this.props)
         this.setState({
             nome: this.props.produto.nome
         })
@@ -57,7 +56,6 @@ export default class FormularioEdicaoProduto extends Component<props, state> {
             preco: this.preco,
             estoque: this.estoque
         }
-        console.log(mapeado)
         await fetch("http://localhost:3001/produto/modificar/" + this.props.produto.id, {
             method: "PUT",
             headers: {
@@ -71,14 +69,34 @@ export default class FormularioEdicaoProduto extends Component<props, state> {
     }
 
     async onSubmit() {
-        if (!this.nome || !this.preco || !this.estoque) {
+
+        if (
+            !this.nome || this.nome === "" ||
+            !this.preco || this.preco === "" ||
+            !this.estoque || this.estoque === "" 
+        ) {
+            Swal.fire("Erro!", "Preencha todos os campos.", "error");
+            return;
+        }
+
+        if(this.preco <= 0){
             Swal.fire(
                 'Erro!',
-                'Preencha todos os campos.',
+                'O preço deve ser maior que 0.',
                 'error'
             )
             return
         }
+
+        if(this.estoque <= 0){
+            Swal.fire(
+                'Erro!',
+                'O estoque deve ser maior que 0.',
+                'error'
+            )
+            return
+        }
+
 
         let resposta = await this.cadastro()
         if (resposta) {

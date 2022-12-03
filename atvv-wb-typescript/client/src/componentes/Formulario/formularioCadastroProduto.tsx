@@ -32,7 +32,6 @@ export default class FormularioCadastroProduto extends Component<props> {
             preco: this.preco,
             estoque: this.estoque
         }
-        console.log(mapeado)
         await fetch("http://localhost:3001/produto/cadastrar", {
             method: "POST",
             headers: {
@@ -50,6 +49,24 @@ export default class FormularioCadastroProduto extends Component<props> {
             Swal.fire(
                 'Erro!',
                 'Preencha todos os campos.',
+                'error'
+            )
+            return
+        }
+
+        if(this.preco <= 0){
+            Swal.fire(
+                'Erro!',
+                'O preço deve ser maior que 0.',
+                'error'
+            )
+            return
+        }
+
+        if(this.estoque <= 0){
+            Swal.fire(
+                'Erro!',
+                'O estoque deve ser maior que 0.',
                 'error'
             )
             return
@@ -98,17 +115,17 @@ export default class FormularioCadastroProduto extends Component<props> {
                     <form className="col s12">
                         <div id="modalLine" className="row">
                             <div className="input-field col s12">
-                                <input id="nome" type="text" onChange={this.onClickNome} className="validate" />
+                                <input id="nome" type="text" onChange={this.onClickNome} />
                                 <label htmlFor="nome">Nome</label>
                             </div>
                         </div>
                         <div id="modalLine" className="row">
                             <div className="input-field col s6">
-                                <input id="preco" type="number" onChange={this.onClickPreco} className="validate" />
+                                <input id="preco" type="number" onChange={this.onClickPreco} />
                                 <label htmlFor="preco">Preço</label>
                             </div>
                             <div className="input-field col s6">
-                                <input id="estoque" type="number" onChange={this.onClickEstoque} className="validate" />
+                                <input id="estoque" type="number" onChange={this.onClickEstoque} />
                                 <label htmlFor="estoque">Estoque</label>
                             </div>
                         </div>  

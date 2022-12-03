@@ -44,6 +44,6 @@ const clienteProduto = database.define('clienteProduto', {
     }
 })
 
-clienteProduto.sync({ alter: true });
+// clienteProduto.sync({ alter: true });
 
 module.exports = clienteProduto;

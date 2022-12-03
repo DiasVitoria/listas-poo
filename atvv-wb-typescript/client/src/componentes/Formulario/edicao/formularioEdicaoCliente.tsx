@@ -23,7 +23,7 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
         this.state = {
             nome: this.props.cliente.nome
         }
-        
+
         // this.nome = this.props.cliente.nome
         // this.cpf = this.props.cliente.cpf
         // this.nomeSocial = this.props.cliente.nomeSocial
@@ -44,10 +44,10 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
         this.load()
     }
 
-    
+
 
     componentDidUpdate(prevProps: Readonly<props>, prevState: Readonly<state>, snapshot?: any): void {
-        if(this.props != prevProps){
+        if (this.props != prevProps) {
             this.load()
         }
     }
@@ -72,7 +72,6 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
             telefone: this.telefone,
             email: this.email
         }
-        console.log(mapeado)
         await fetch("http://localhost:3001/cliente/modificar/" + this.props.cliente.id, {
             method: "PUT",
             headers: {
@@ -85,14 +84,41 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
         return retorno
     }
 
-    async onSubmit() {
-        if (!this.nome || !this.nomeSocial || !this.cpf || !this.telefone) {
-            Swal.fire(
-                'Erro!',
-                'Preencha todos os campos.',
-                'error'
-            )
-            return
+    async onSubmit() {        
+        if (
+            !this.nome || this.nome === "" ||
+            !this.nomeSocial || this.nomeSocial === "" ||
+            !this.email || this.email === "" ||
+            !this.telefone || this.telefone === "" ||
+            !this.cpf || this.cpf === "" 
+        ) {
+            Swal.fire("Erro!", "Preencha todos os campos.", "error");
+            return;
+        }
+
+        if (!this.email.includes("@") || !this.email.includes(".com")) {
+            Swal.fire({
+                icon: "error",
+                title: "E-mail inválido",
+                text: "E-mail deve conter '@' e '.com'",
+            });
+            return;
+        }
+
+        if ((this.telefone + "").length < 11) {
+            Swal.fire({
+                icon: "error",
+                title: "Número de telefone inválido.",
+            });
+            return;
+        }
+
+        if ((this.cpf + "").length < 11) {
+            Swal.fire({
+                icon: "error",
+                title: "CPF inválido.",
+            });
+            return;
         }
 
         let resposta = await this.cadastro()
@@ -121,25 +147,30 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
         this.nome = event.target.value
     }
 
-    onClickCpf(event){
+    onClickCpf(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength);
+        }
         this.cpf = event.target.value
     }
 
-    onClickNomeSocial(event){
+    onClickNomeSocial(event) {
         this.nomeSocial = event.target.value
     }
 
-    onClickTelefone(event){
+    onClickTelefone(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength);
+        }
         this.telefone = event.target.value
     }
 
-    onClickEmail(event){
+    onClickEmail(event) {
         this.email = event.target.value
-        console.log('mudou o email')
     }
 
     render() {
-        
+
         return (
             <>
                 <div className="modal-content">
@@ -158,17 +189,18 @@ export default class FormularioEdicaoCliente extends Component<props, state> {
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s6">
-                                    <input defaultValue={this.cpf} id="cpf" onChange={this.onClickCpf} type="text" />
+                                    <input defaultValue={this.cpf} id="cpf" onChange={this.onClickCpf} type="number" maxLength={11} />
                                     <label htmlFor="cpf" className="active">CPF</label>
                                 </div>
                                 <div className="input-field col s6">
-                                    <input defaultValue={this.email} id="email" onChange={this.onClickEmail} type="email"/>
+                                    <input defaultValue={this.email} id="email" onChange={this.onClickEmail} type="email" />
                                     <label htmlFor="email" className="active">Email</label>
                                 </div>
                             </div>
                             <div id="modalLine" className="row">
                                 <div className="input-field col s6">
-                                    <input defaultValue={this.telefone} id="telefone" onChange={this.onClickTelefone} type="text" />
+                                    <input defaultValue={this.telefone} id="telefone" onChange={this.onClickTelefone} type="number"
+                                        maxLength={11} />
                                     <label htmlFor="telefone" className="active">Telefone</label>
                                 </div>
                             </div>

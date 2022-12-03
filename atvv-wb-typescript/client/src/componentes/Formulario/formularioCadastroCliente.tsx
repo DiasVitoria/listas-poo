@@ -41,7 +41,6 @@ export default class FormularioCadastroCliente extends Component<props> {
             email: this.email,
             genero: this.genero
         }
-        console.log(mapeado)
         await fetch("http://localhost:3001/cliente/cadastrar", {
             method: "POST",
             headers: {
@@ -55,13 +54,49 @@ export default class FormularioCadastroCliente extends Component<props> {
     }
 
     async onSubmit() {
-        if (!this.nome || !this.nomeSocial || !this.cpf || !this.telefone || !this.genero) {
-            Swal.fire(
-                'Erro!',
-                'Preencha todos os campos.',
-                'error'
-            )
-            return
+        if (
+            !this.nome || this.nome === "" ||
+            !this.nomeSocial || this.nomeSocial === "" ||
+            !this.email || this.email === "" ||
+            !this.telefone || this.telefone === "" ||
+            !this.cpf || this.cpf === "" ||
+            !this.genero
+        ) {
+            Swal.fire("Erro!", "Preencha todos os campos.", "error");
+            return;
+        }
+
+        if ((this.cpf + "").length < 11) {
+            Swal.fire({
+                icon: "error",
+                title: "CPF inválido.",
+            });
+            return;
+        }
+
+        if (!this.email.includes("@") || !this.email.includes(".com")) {
+            Swal.fire({
+                icon: "error",
+                title: "E-mail inválido",
+                text: "E-mail deve conter '@' e '.com'",
+            });
+            return;
+        }
+
+        if ((this.telefone + "").length < 11) {
+            Swal.fire({
+                icon: "error",
+                title: "Número de telefone inválido.",
+            });
+            return;
+        }
+
+        if(this.genero === -1){
+            Swal.fire({
+                icon: "error",
+                title: "Selecione um gênero.",
+            });
+            return;
         }
 
         let resposta = await this.cadastro()
@@ -85,84 +120,90 @@ export default class FormularioCadastroCliente extends Component<props> {
             })
         }
     }
-    
+
     onClickNome(event) {
         this.nome = event.target.value
     }
 
-    onClickCpf(event){
+    onClickCpf(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength);
+        }
         this.cpf = event.target.value
     }
 
-    onClickNomeSocial(event){
+    onClickNomeSocial(event) {
         this.nomeSocial = event.target.value
     }
 
-    onClickTelefone(event){
+    onClickTelefone(event) {
+        if (event.target.value.length > event.target.maxLength) {
+            event.target.value = event.target.value.slice(0, event.target.maxLength);
+        }
         this.telefone = event.target.value
     }
 
-    onClickEmail(event){
+    onClickEmail(event) {
         this.email = event.target.value
     }
 
-    onClickGenero(event){
+    onClickGenero(event) {
         this.genero = event.target.value
     }
 
     render() {
         return (
             <>
-            <div className="modal-content">
-                <h5>Cadastro de Cliente</h5>
-                <div className="row">
-                    <form className="col s12">
-                        <div id="modalLine" className="row">
-                            <div className="input-field col s6">
-                                <input id="nome" type="text" onChange={this.onClickNome} className="validate" />
-                                <label htmlFor="nome">Nome</label>
+                <div className="modal-content">
+                    <h5>Cadastro de Cliente</h5>
+                    <div className="row">
+                        <form className="col s12">
+                            <div id="modalLine" className="row">
+                                <div className="input-field col s6">
+                                    <input id="nome" type="text" onChange={this.onClickNome} />
+                                    <label htmlFor="nome">Nome</label>
+                                </div>
+                                <div className="input-field col s6">
+                                    <input id="nomeSocial" type="text" onChange={this.onClickNomeSocial} />
+                                    <label htmlFor="nomeSocial">Nome Social</label>
+                                </div>
                             </div>
-                            <div className="input-field col s6">
-                                <input id="nomeSocial" type="text" onChange={this.onClickNomeSocial} className="validate" />
-                                <label htmlFor="nomeSocial">Nome Social</label>
+                            <div id="modalLine" className="row">
+                                <div className="input-field col s6">
+                                    <input id="cpf" type="number" maxLength={11} onChange={this.onClickCpf} />
+                                    <label htmlFor="cpf">CPF</label>
+                                </div>
+                                <div className="input-field col s6">
+                                    <select onChange={this.onClickGenero}>
+                                        <option value="-1">Escolha uma opção</option>
+                                        <option value="Feminino">Feminino</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
+                                    <label htmlFor="gender">Gênero</label>
+                                </div>
                             </div>
-                        </div>
-                        <div id="modalLine" className="row">
-                            <div className="input-field col s6">
-                                <input id="cpf" type="text" onChange={this.onClickCpf} className="validate" />
-                                <label htmlFor="cpf">CPF</label>
+                            <div id="modalLine" className="row">
+                                <div className="input-field col s8">
+                                    <input id="email" type="email" onChange={this.onClickEmail} />
+                                    <label htmlFor="email">Email</label>
+                                </div>
+                                <div className="input-field col s4">
+                                    <input id="telefone" type="number" maxLength={11} onChange={this.onClickTelefone} />
+                                    <label htmlFor="telefone">Telefone</label>
+                                </div>
                             </div>
-                            <div className="input-field col s6">
-                                <select onChange={this.onClickGenero}>
-                                    <option value="">Escolha uma opção</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
-                                <label htmlFor="gender">Gênero</label>
-                            </div>
-                        </div>
-                        <div id="modalLine" className="row">
-                            <div className="input-field col s8">
-                                <input id="email" type="email" onChange={this.onClickEmail} className="validate" />
-                                <label htmlFor="email">Email</label>
-                            </div>
-                            <div className="input-field col s4">
-                                <input id="telefone" type="text" onChange={this.onClickTelefone} className="validate" />
-                                <label htmlFor="telefone">Telefone</label>
-                            </div>
-                        </div>
-                    </form>
-                </div >
-            </div>
-            <div className="modal-footer">
-                <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
-                    <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
-                </button>
-                <button id="cadastrarButtonContainer" onClick={this.onSubmit} type="submit" name="action" className="waves-effect waves-light btn-flat">
-                    <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Cadastrar
-                </button>
-            </div>
+                        </form>
+                    </div >
+                </div>
+                <div className="modal-footer">
+                    <button id="cancelButtonContainer" className="modal-close waves-effect waves-light btn-flat">
+                        <a href="#!"><i id="cancelButton" className="material-icons right">cancel</i></a>Cancelar
+                    </button>
+                    <button id="cadastrarButtonContainer" onClick={this.onSubmit} type="submit" name="action" className="waves-effect waves-light btn-flat">
+                        <a href="#!"><i id="sendButton" className="material-icons right">send</i></a>Cadastrar
+                    </button>
+                </div>
             </>
         )
     }

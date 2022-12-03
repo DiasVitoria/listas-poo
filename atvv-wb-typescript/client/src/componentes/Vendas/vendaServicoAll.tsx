@@ -178,7 +178,7 @@ export default class VendaServicoAll extends Component<{}, state> {
                             </div>
                             <div id="vendaModalLine" className="row">
                                 <div className={"input-field col s12"}>
-                                    <input onChange={this.changeQuantidade} id="quantidade" type="text" className="validate" />
+                                    <input onChange={this.changeQuantidade} id="quantidade" type="number" className="validate" />
                                     <label htmlFor="quantidade">Quantidade</label>
                                 </div>
                             </div>

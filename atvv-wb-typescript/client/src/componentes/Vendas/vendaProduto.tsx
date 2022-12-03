@@ -50,6 +50,24 @@ export default class VendaProduto extends Component<props, state> {
             return;
         }
 
+        if(this.quantidade <= 0){
+            Swal.fire(
+                'Erro!',
+                'Quantidade deve ser maior que 0.',
+                'error'
+            )
+            return
+        }
+
+        if((this.props.produto.estoque - this.quantidade) < 0){
+            Swal.fire(
+                'Erro!',
+                'Esse produto não possui estoque.',
+                'error'
+            )
+            return;
+        }
+
         let resposta = await this.cadastro()
         if (resposta) {
             Swal.fire(
@@ -84,9 +102,32 @@ export default class VendaProduto extends Component<props, state> {
 
         }
 
-        console.log(mapeado)
         await fetch("http://localhost:3001/clienteProduto/cadastrar", {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(mapeado)
+        }).then(r => {
+            retorno = r.status === 200
+        })
+
+        if(retorno){
+            this.diminuirEstoque()
+        }
+
+        return retorno
+    }
+
+    diminuirEstoque() {
+        let retorno = false
+        let url = "http://localhost:3001/produto/modificar/" + this.props.produto.id
+        let estoque = this.props.produto.estoque
+        let mapeado = {
+            estoque: estoque - 1
+        }
+        fetch(url, {
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -155,7 +196,7 @@ export default class VendaProduto extends Component<props, state> {
                             <h6>Quantidade</h6>
                             <div id="vendaModalLine" className="row">
                                 <div className={"input-field col s12"}>
-                                    <input onChange={this.changeQuantidade} id="quantidade" type="text" className="validate" />
+                                    <input onChange={this.changeQuantidade} id="quantidade" type="number" className="validate" />
                                     <label htmlFor="quantidade">Quantidade</label>
                                 </div>
                             </div>

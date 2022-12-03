@@ -73,6 +73,26 @@ export default class Venda extends Component<{}, state> {
             return;
         }
 
+        if(this.quantidade <= 0){
+            Swal.fire(
+                'Erro!',
+                'Quantidade deve ser maior que 0.',
+                'error'
+            )
+            return
+        }
+
+        if(this.state.tipoVenda === "Produto"){
+            if((this.state.produtos.find(it=> it.id === this.item).estoque - this.quantidade) < 0){
+                Swal.fire(
+                    'Erro!',
+                    'Esse produto não possui estoque.',
+                    'error'
+                )
+                return;
+            }
+        }
+
         let resposta = await this.cadastro()
         if (resposta) {
             Swal.fire(
@@ -129,6 +149,11 @@ export default class Venda extends Component<{}, state> {
         }).then(r => {
             retorno = r.status === 200
         })
+
+        if(retorno){
+            this.diminuirEstoque()
+        }
+
         return retorno
     }
 
@@ -183,6 +208,26 @@ export default class Venda extends Component<{}, state> {
         });
     }
 
+    diminuirEstoque() {
+        if(this.state.tipoVenda === "Serviço") return;
+        let retorno = false
+        let url = "http://localhost:3001/produto/modificar/" + this.item
+        let estoque = this.state.produtos.find(it=> it.id === this.item).estoque
+        let mapeado = {
+            estoque: estoque - 1
+        }
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(mapeado)
+        }).then(r => {
+            retorno = r.status === 200
+        })
+        return retorno
+    }
+
     render() {
         return (
             <>
@@ -227,7 +272,7 @@ export default class Venda extends Component<{}, state> {
                                 <label htmlFor="option">{this.state.tipoVenda}</label>
                             </div>
                             <div className={"input-field col s12 " + (!this.state.tipoVenda ? "hidden" : "")}>
-                                <input onChange={this.changeQuantidade} id="quantidade" type="text" className="validate" />
+                                <input onChange={this.changeQuantidade} id="quantidade" type="number" className="validate" />
                                 <label htmlFor="quantidade">Quantidade</label>
                             </div>
                         </div>

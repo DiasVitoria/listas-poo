@@ -29,7 +29,6 @@ export default class FormularioCadastroServico extends Component<props> {
             nome: this.nome,
             preco: this.preco
         }
-        console.log(mapeado)
         await fetch("http://localhost:3001/servico/cadastrar", {
             method: "POST",
             headers: {
@@ -47,6 +46,15 @@ export default class FormularioCadastroServico extends Component<props> {
             Swal.fire(
                 'Erro!',
                 'Preencha todos os campos.',
+                'error'
+            )
+            return
+        }
+
+        if(this.preco <= 0){
+            Swal.fire(
+                'Erro!',
+                'O preço deve ser maior que 0.',
                 'error'
             )
             return
